@@ -6,7 +6,7 @@ import TopNavBar from '@/components/Navbar/TopNavBar.vue';
 </script>
 
 <template>
-    <div class="container-fluid">
+    <div class="container">
         <SidebarMenu />
         <TopNavBar />
     </div>
