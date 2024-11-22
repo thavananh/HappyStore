@@ -1,16 +1,20 @@
 <script setup>
-
+    import UserAvatar from '@/assets/images/avatar/cat.jpg';
 </script>
 
 <template>
-    <div class="card" style="width: 18rem;">
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        </div>
+    <div class="card d-flex flex-column align-items-center justify-content-center shadow rounded-3" style="width: 20rem; height: 15rem; border: none">
+        <img :src="UserAvatar" class="card-img-top custom-img rounded-circle" alt="...">
+        <span class="mt-2 fs-5" style="font-weight: bold">Duy Nguyễn</span>
+        <span>Chủ Cửa Hàng</span>
     </div>
 </template>
 
 <style scoped>
+    .custom-img {
+        width: 64px;
+        height: 64px;
+        object-fit: cover;
+    }
 
 </style>

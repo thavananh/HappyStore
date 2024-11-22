@@ -4,7 +4,10 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue'
 </script>
 
 <template>
-    <DefaultLayout></DefaultLayout>
+    <div style="background-color: #F5F2FFFF">
+        <DefaultLayout />
+    </div>
+
 </template>
 
 <style scoped>

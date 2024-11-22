@@ -1,11 +1,11 @@
 <script setup>
-    import LogoHappyStore from '@/assets/images/LogoHappyStore_NenTrang.png';
+    import LogoHappyStore from '@/assets/images/logo/LogoHappyStore_NenTrang.png';
 </script>
 
 <template>
-    <div class="sidebar-wrapper">
+    <div class="sidebar-wrapper d-flex align-items-center">
         <aside class="sidebar">
-            <div class="d-flex logo-container">
+            <div class="logo-container" style="margin-left: 6px">
                 <img class="store-logo" :src="LogoHappyStore" alt="Logo Happy Store">
             </div>
             <hr>
@@ -79,7 +79,6 @@
         margin-bottom: 10px; /* Khoảng cách dọc giữa các mục */
     }
 
-
     .icon {
         font-size: 14px; /* Điều chỉnh kích thước font để biểu tượng có cùng kích thước */
         width: 1.5em; /* Đảm bảo kích thước ngang đồng đều */
@@ -93,8 +92,6 @@
         margin-top: 20px;
     }
     .sidebar-wrapper {
-        width: 250px;
         margin-left: 10px;
-        display: inline-block;
     }
 </style>
