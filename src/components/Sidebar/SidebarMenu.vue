@@ -92,6 +92,6 @@
         margin-top: 20px;
     }
     .sidebar-wrapper {
-        margin-left: 10px;
+        margin-left: 20px;
     }
 </style>
