@@ -5,12 +5,7 @@ import LoginPage from '@/pages/LoginPage.vue'
 </script>
 
 <template>
-
-<!--    <div style="background-color: #F5F2FFFF">-->
-<!--        <DefaultLayout />-->
-<!--    </div>-->
-    <LoginPage/>
-
+    <router-view></router-view>
 </template>
 
 <style scoped>

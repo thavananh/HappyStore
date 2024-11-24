@@ -1,24 +1,5 @@
 <script setup>
     import LoginPic1 from '@/assets/images/login/login_pic1.svg';
-    // const axios = inject('axios');
-    // const login = async () => {
-    //     const username = document.getElementById('validationDefault01').value;
-    //     const password = document.getElementById('inputPassword').value;
-    //
-    //     try {
-    //         const response = await axios.post('http://localhost:3000/api/login', { username, password });
-    //         if (response.data.success) {
-    //             alert(response.data.message);
-    //             console.log('Thông tin user:', response.data.user);
-    //             // Chuyển hướng hoặc xử lý logic sau khi đăng nhập
-    //         } else {
-    //             alert(response.data.message);
-    //         }
-    //     } catch (error) {
-    //         console.error('Lỗi khi đăng nhập:', error);
-    //         alert('Có lỗi xảy ra, vui lòng thử lại.');
-    //     }
-    // };
 </script>
 
 <template>

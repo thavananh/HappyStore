@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import router from '@/router/index.js'
 import './assets/js/all.min.js';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
@@ -10,6 +11,8 @@ const app =  createApp(App)
 
 // Sử dụng provide để inject axios vào toàn bộ app
 // app.provide('axios', axios);
+
+app.use(router)
 
 app.mount('#app')
 
