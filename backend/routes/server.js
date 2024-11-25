@@ -23,6 +23,10 @@ db.connect((err) => {
     console.log('Connected to MySQL database.');
 });
 
+app.get("/", (req, res) => {
+    res.send({msg:"Hello"})
+})
+
 app.get('/users_account', (req, res) => {
     db.query('SELECT * FROM UserAccount', (err, results) => {
         if (err) {
