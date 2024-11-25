@@ -7,4 +7,4 @@ const db = mysql2.createConnection({
     database: 'HappyStore'
 });
 
-module.exports = db
+export default db;
