@@ -3,6 +3,7 @@ import express from 'express'
 import bodyParser from 'body-parser';
 import db from './database.js'
 import cors from 'cors';
+import { query } from 'express-validator'
 
 // Initialize the Express app
 const app = express();
@@ -58,17 +59,17 @@ db.connect((err) => {
     console.log('Connected to MySQL database.');
 });
 
-app.get("/", (req, res, next) => {
+app.get("/",(req, res, next) => {
     console.log("Base URL")
     next()
 }, (req, res) => {
     res.send("Hello, love to see you")
 });
 
-app.get('/api/users', (req, res) => {
+app.get('/api/users', query('filter').isString().notEmpty(), (req, res) => {
+    console.log(req)
     const {query: {filter, value}} = req;
     if (!filter && !value) return res.send(mockUsers)
-    if (filter && value) return res.send(mockUsers.filter((user) => user[filter] === value))
 })
 
 app.get('/api/users/:id', resolveIndexByUserId, loggingMiddleWare, (req, res) => {
