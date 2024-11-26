@@ -3,7 +3,7 @@ import express from 'express'
 import bodyParser from 'body-parser';
 import db from './database.js'
 import cors from 'cors';
-import { query } from 'express-validator'
+import { query, validationResult, body } from 'express-validator'
 
 // Initialize the Express app
 const app = express();
@@ -66,10 +66,13 @@ app.get("/",(req, res, next) => {
     res.send("Hello, love to see you")
 });
 
-app.get('/api/users', query('filter').isString().notEmpty(), (req, res) => {
-    console.log(req)
+app.get('/api/users', query('filter').isString().notEmpty().isLength({min: 3, max: 10}).withMessage('Must be at least 3-10 char')
+    , (req, res) => {
+    const result = validationResult(req);
+    console.log(result)
     const {query: {filter, value}} = req;
-    if (!filter && !value) return res.send(mockUsers)
+    if (filter && value) return res.send(mockUsers.filter((user) => user[filter].includes(value)));
+    return res.send(mockUsers)
 })
 
 app.get('/api/users/:id', resolveIndexByUserId, loggingMiddleWare, (req, res) => {
@@ -77,7 +80,13 @@ app.get('/api/users/:id', resolveIndexByUserId, loggingMiddleWare, (req, res) =>
     return res.send(mockUsers[findUserIndex])
 })
 
-app.post('/api/users', (req, res) => {
+app.post('/api/users', body('username')
+        .notEmpty().withMessage('Not be empty')
+        .isLength({min: 5, max: 32}).withMessage('Username must be at least 5-32 char')
+        .isString().withMessage('Username must be a string')
+    , loggingMiddleWare,(req, res) => {
+    const result = validationResult(req);
+    console.log(result);
     const {body} = req
     console.log(body)
     const newUser = {id: mockUsers[mockUsers.length - 1].id+1, ...body}
