@@ -1,62 +1,80 @@
-const express = require('express');
-const router = express.Router();
-const Student = require('../models/student.model');
+import { Router } from 'express'
+import { checkSchema, matchedData, query, validationResult } from 'express-validator'
+import {mockUsers} from './constant.js'
+import { createUserValidationSchema } from '../ultis/validationSchema.js'
+import {resolveIndexByUserId, loggingMiddleWare} from '../middleware/middleware.js'
 
-// Thêm sinh viên
-router.post('/add-student', async (req, res) => {
-    try {
-        const student = await Student.create(req.body);
-        res.json({ message: 'Thêm sinh viên thành công!', data: student });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
 
-// Lấy tất cả sinh viên
-router.get('/', async (req, res) => {
-    try {
-        const students = await Student.findAll();
-        res.json(students);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
 
-// Lấy sinh viên theo ID
-router.get('/read-student/:id', async (req, res) => {
-    try {
-        const student = await Student.findByPk(req.params.id);
-        if (!student) return res.status(404).json({ error: 'Không tìm thấy sinh viên' });
-        res.json(student);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
+const router = Router()
 
-// Cập nhật sinh viên
-router.put('/update-student/:id', async (req, res) => {
-    try {
-        const student = await Student.findByPk(req.params.id);
-        if (!student) return res.status(404).json({ error: 'Không tìm thấy sinh viên' });
+router.get('/api/users',
+    query('filter')
+        .isString()
+        .notEmpty()
+        .isLength({
+            min: 3,
+            max: 10,
+        })
+        .withMessage('Must be at least 3-10 char'),
+    (req, res) => {
+        const result = validationResult(req)
+        req.sessionStore.get(req.session.id, (err, sessionData) => {
+            if (err) {
+                console.log(err)
+                throw err
+            }
+            console.log(sessionData)
+        })
 
-        await student.update(req.body);
-        res.json({ message: 'Cập nhật sinh viên thành công!', data: student });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
+        const {
+            query: { filter, value },
+        } = req
+        if (filter && value)
+            return res.send(mockUsers.filter((user) => user[filter].includes(value)))
+        return res.send(mockUsers)
+    },
+)
 
-// Xóa sinh viên
-router.delete('/delete-student/:id', async (req, res) => {
-    try {
-        const student = await Student.findByPk(req.params.id);
-        if (!student) return res.status(404).json({ error: 'Không tìm thấy sinh viên' });
+router.get('/api/users/:id', resolveIndexByUserId, loggingMiddleWare, (req, res) => {
+    const { findUserIndex } = req
+    return res.send(mockUsers[findUserIndex])
+})
 
-        await student.destroy();
-        res.json({ message: 'Xóa sinh viên thành công!' });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
+router.post(
+    '/api/users',
+    checkSchema(createUserValidationSchema),
+    loggingMiddleWare,
+    (req, res) => {
+        const result = validationResult(req)
+        console.log(result)
+        if (!result.isEmpty()) return res.status(404).send({ errors: result.array() })
+        const data = matchedData(req)
+        const newUser = { id: mockUsers[mockUsers.length - 1].id + 1, ...data }
+        mockUsers.push(newUser)
+        return res.status(201).send(newUser)
+    },
+)
 
-module.exports = router;
+
+
+router.put('/api/users/:id', resolveIndexByUserId, loggingMiddleWare, (req, res) => {
+    const { body, findUserIndex } = req
+    mockUsers[findUserIndex] = { findUserIndex, ...body }
+    return res.sendStatus(200)
+})
+
+router.patch('/api/users/:id', resolveIndexByUserId, loggingMiddleWare, (req, res) => {
+    const { body, findUserIndex } = req
+    mockUsers[findUserIndex] = { ...mockUsers[findUserIndex], ...body }
+    return res.sendStatus(200)
+})
+
+router.delete('/api/users/:id', resolveIndexByUserId, loggingMiddleWare, (req, res) => {
+    const { findUserIndex } = req
+    mockUsers.splice(findUserIndex, 1)
+    return res.sendStatus(200)
+})
+
+
+export default router
