@@ -4,7 +4,7 @@
 
 <template>
     <div class="card d-flex flex-column align-items-center justify-content-center shadow rounded-3" style="width: 20rem; height: 15rem; border: none">
-        <img class="avatar avatar-xl" :src="UserAvatar" alt="Avatar"/>
+        <img class="avatar avatar-xl custom-img" :src="UserAvatar" alt="Avatar"/>
         <span class="mt-2 fs-5" style="font-weight: bold">Duy Nguyễn</span>
         <span>Chủ Cửa Hàng</span>
     </div>
@@ -12,9 +12,10 @@
 
 <style scoped>
     .custom-img {
-        width: 64px;
-        height: 64px;
+        width: 96px;
+        height: 96px;
         object-fit: cover;
+        border-radius: 50%;
     }
 
 </style>

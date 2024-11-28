@@ -3,60 +3,59 @@
 </script>
 
 <template>
-    <div class="sidebar-wrapper d-flex align-items-center">
-        <aside class="sidebar">
-            <div class="logo-container" style="margin-left: 6px">
+    <div class="sidebar-wrapper">
+        <aside class="sidebar d-flex align-items-center flex-column">
+            <div class="logo-container">
                 <img class="store-logo" :src="LogoHappyStore" alt="Logo Happy Store">
             </div>
-            <hr>
-            <div class="list-container">
-                <ul class="nav nav-pills flex-column" data-bs-parrent="#sidebar">
+            <div class="list-container" style="width: 100%">
+                <ul class="nav nav-pills d-flex flex-column" data-bs-parrent="#sidebar">
                     <li class="nav-item">
                         <a href="#" class="nav-link" aria-current="page">
                             <i class="fa-solid fa-grid-2 fa-xs icon"></i>
-                            <span class="align-top">Tổng quan</span>
+                            <span>Tổng quan</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="fa-solid fa-boxes-stacked fa-xs icon"></i>
-                            <span class="align-top">Sản phẩm</span>
+                            <span>Sản phẩm</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="fa-solid fa-bag-shopping fa-xs icon"></i>
-                            <span class="align-top">Đơn đặt hàng</span>
+                            <span>Đơn đặt hàng</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="fa-solid fa-users fa-xs icon"></i>
-                            <span class="align-top">Khách hàng</span>
+                            <span>Khách hàng</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="fa-regular fa-chart-mixed fa-xs icon"></i>
-                            <span class="align-top">Thống kê</span>
+                            <span>Thống kê</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="fa-solid fa-envelope fa-xs icon"></i>
-                            <span class="align-top">Tin nhắn</span>
+                            <span>Tin nhắn</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="fa-solid fa-file-lines fa-xs icon"></i>
-                            <span class="align-top">Báo cáo</span>
+                            <span>Báo cáo</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="fa-solid fa-gear fa-xs icon"></i>
-                            <span class="align-top">Cài đặt</span>
+                            <span>Cài đặt</span>
                         </a>
                     </li>
                 </ul>
@@ -67,11 +66,6 @@
 </template>
 
 <style scoped>
-    * {
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-    }
     .store-logo {
         width: 8rem;
     }
@@ -79,19 +73,24 @@
         margin-bottom: 10px; /* Khoảng cách dọc giữa các mục */
     }
 
+
     .icon {
-        font-size: 14px; /* Điều chỉnh kích thước font để biểu tượng có cùng kích thước */
+        font-size: 20px; /* Điều chỉnh kích thước font để biểu tượng có cùng kích thước */
         width: 1.5em; /* Đảm bảo kích thước ngang đồng đều */
         height: 1.5em; /* Đảm bảo kích thước dọc đồng đều */
         margin-right: 8px; /* Khoảng cách giữa biểu tượng và văn bản */
-        display: inline-flex;
+    }
+    .nav-link {
+        display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: left;
     }
-    .list-container {
-        margin-top: 20px;
+    .nav-link:hover {
+        background-color: #007bff;
+        color:white;
+        font-weight: bold;
     }
-    .sidebar-wrapper {
-        margin-left: 20px;
+    .nav-item span {
+        font-size: 16px;
     }
 </style>

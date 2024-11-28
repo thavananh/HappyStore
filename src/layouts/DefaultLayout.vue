@@ -8,7 +8,7 @@ import UserProfileOverview from '@/components/Dashboard/UserProfileOverview.vue'
 
 <template>
     <div class="container-fluid d-flex flex-row" style="height: 100vh">
-        <div class="flex-grow-0" style="width: 250px; background-color: white"> <!-- SidebarMenu -->
+        <div class="flex-grow-0" style="width: 200px; background-color: white"> <!-- SidebarMenu -->
             <SidebarMenu />
         </div>
         <div class="flex-grow-1" style="background-color: #F9F8FDFF"> <!-- TopNavBar -->
@@ -21,6 +21,7 @@ import UserProfileOverview from '@/components/Dashboard/UserProfileOverview.vue'
 
 <style scoped>
     .container-fluid {
-        max-width: 1440px; /* Tăng chiều rộng container */
+        padding: 0;
+        margin: 0;
     }
 </style>
