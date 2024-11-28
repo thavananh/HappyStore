@@ -1,5 +1,6 @@
 <script setup>
     import LoginPic1 from '@/assets/images/login/login_pic1.svg';
+    import GoogleLogo from '@/assets/images/logo/Google__G__logo.svg'
 </script>
 
 <template>
@@ -18,7 +19,7 @@
                             <input type="text" class="form-control is-invalid" id="validationDefault01" required />
                             <div class="invalid-feedback">This field is required.</div>
                         </div>
-                        <div class="mb-5">
+                        <div class="mb-4">
                             <label for="inputPassword" class="col-sm-2 col-form-label fs-5" style="color: black; font-weight: bold">Password</label>
                             <div class="col">
                                 <input type="password" class="form-control" id="inputPassword">
@@ -26,19 +27,21 @@
                         </div>
 
                         <!-- Submit button -->
-                        <button @click="login" type="submit" class="btn btn-primary btn-lg btn-block" style="width: 100%">Sign in</button>
+                        <button @click="login" type="submit" class="btn btn-primary" style="width: 100%; font-weight: bold">Sign in</button>
 
-                        <div class="divider d-flex align-items-center my-4">
+                        <div class="divider d-flex align-items-center my-3">
                             <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <a class="btn btn-primary btn-lg btn-block" style="background-color: #3b5998" href="#!"
+                            <a class="btn btn-primary" style="background-color: #3b5998; font-weight: bold" href="#!"
                                role="button">
-                                <i class="fab fa-facebook-f me-2"></i>Continue with Facebook
+                                <i class="fab fa-facebook-f me-2"></i>
+                                <span>Continue with Facebook</span>
                             </a>
-                            <a class="btn btn-primary btn-lg btn-block" style="background-color: #55acee" href="#!"
+                            <a class="btn btn-primary" style="background-color: white; font-weight: bold" href="#!"
                                role="button">
-                                <i class="fab fa-twitter me-2"></i>Continue with Twitter
+                                <img :src=GoogleLogo alt="google-logo" class="me-2">
+                                <span style="color: black">Continue with Google</span>
                             </a>
                         </div>
                     </form>

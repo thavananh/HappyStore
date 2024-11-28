@@ -1,7 +1,7 @@
 // Import modules using ES module syntax
 import express from 'express'
 import bodyParser from 'body-parser'
-import db from './database.js'
+import sequelize from './database.js'
 import cors from 'cors'
 import userRouter from './UserAccount.route.js'
 import productRouter from './Product.route.js'
@@ -10,10 +10,29 @@ import cookieParser from 'cookie-parser'
 import session from 'express-session'
 import { mockUsers } from './constant.js'
 import passport from 'passport'
-import "../strategies/local-stategies.js"
+import '../strategies/local-stategies.js'
+
+
 
 // Initialize the Express app
 const app = express()
+
+sequelize
+    .authenticate()
+    .then(() => {
+        console.log('Connection has been established successfully.')
+    })
+    .catch((error) => {
+        console.error('Unable to connect to the database:', error)
+    })
+
+sequelize.sync({ force: false }) // force: true sẽ xóa bảng cũ và tạo lại bảng mới
+    .then(() => {
+        console.log('userAccount table has been created successfully!');
+    })
+    .catch((error) => {
+        console.error('Error syncing the database:', error);
+    });
 
 app.use(express.json())
 app.use(cookieParser('hello_world'))
@@ -29,12 +48,8 @@ app.use(
 )
 app.use(cors())
 app.use(bodyParser.json())
-
 app.use(passport.initialize())
 app.use(passport.session())
-
-
-
 app.use(userRouter)
 app.use(productRouter)
 
@@ -43,17 +58,8 @@ app.use(productRouter)
 // Database connection configuration
 
 // Connect to the MySQL database
-db.connect((err) => {
-    if (err) {
-        console.error('Database connection failed:', err.stack)
-        return
-    }
-    console.log('Connected to MySQL database.')
-})
 
 app.get('/', (req, res) => {
-    console.log(req.session)
-    console.log(req.session.id)
     req.session.visited = true
     res.send('Hello, love to see you')
 })
@@ -95,7 +101,23 @@ app.get('/', (req, res) => {
 // })
 
 app.post('/api/auth', passport.authenticate('local'), (req, res) => {
+    console.log("Gọi auth user")
+    res.sendStatus(200)
+})
 
+app.get('/api/auth/status', (req, res) => {
+    console.log(`Gọi auth/status endpoint`)
+    console.log(req.user)
+    return req.user ? res.status(200).send(req.user) : res.status(401).send('Not authorized')
+})
+
+app.post('/api/auth/logout', (req, res) => {
+    console.log('Đang ở /api/auth/logout')
+    if (!req.user) return res.status(401)
+    req.logout((err) => {
+        if (err) return res.sendStatus(400)
+        return res.sendStatus(200)
+    })
 })
 
 // Start the server
@@ -103,5 +125,3 @@ const PORT = 3000
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`)
 })
-
-

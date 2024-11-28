@@ -1,5 +1,5 @@
 import { mockUsers } from '../routes/constant.js'
-
+import userSchema from '../models/UserAccount.model.js'
 export const loggingMiddleWare = (req, res, next) => {
     console.log(`${req.method} - ${req.url}`)
     next()
@@ -17,3 +17,4 @@ export const resolveIndexByUserId = (req, res, next) => {
     req.findUserIndex = findUserIndex
     next()
 }
+

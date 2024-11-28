@@ -1,29 +1,36 @@
 import passport from 'passport'
-
 import {Strategy} from 'passport-local'
-import { mockUsers } from '../routes/constant.js'
+import { getUser } from '../routes/UserAccount.route.js'
+import {comparePassword} from './helper.js'
 
 passport.serializeUser((user, done) => {
-    done(null, user.id)
+    console.log("Inside serializeUser")
+    done(null, user)
+})
+
+passport.deserializeUser((user, done) => {
+    console.log("Inside deserializeUser")
+    try {
+        console.log("Deserialize User")
+        if (!user) throw new Error('User not found')
+        done(null, user)
+    } catch (err) {
+        console.log(`Có lỗi ở DeserializeUser: ${err}`)
+        console.log(`In ra giá trị User ${user}`)
+        done(err, null)
+    }
 })
 
 export default passport.use(
-    new Strategy((username, password, done) => {
+    new Strategy(async (username, password, done) => {
         try {
-            console.log(`username: ${username}`)
-            console.log(`password: ${password}`)
-            const findUser = mockUsers.find((user) => user.username === username)
-            if (!findUser) {
-                throw new Error('User not found')
-            }
-            if (findUser.password !== password) {
-                throw new Error('Invalid Credentials')
-            }
+            const findUser = await getUser(username)
+            console.log(findUser)
+            if (!findUser) throw new Error('User not found')
+            if (findUser.username !== username || comparePassword(findUser.password, password)) throw new Error('BAD CREDENTIALS')
             done(null, findUser)
-        }
-        catch (err) {
+        } catch (err) {
             done(err, null)
         }
-
     })
 )
