@@ -1,5 +1,5 @@
 import { mockUsers } from '../routes/constant.js'
-import userSchema from '../models/UserAccount.model.js'
+import userModel from '../models/UserAccount.model.js'
 export const loggingMiddleWare = (req, res, next) => {
     console.log(`${req.method} - ${req.url}`)
     next()

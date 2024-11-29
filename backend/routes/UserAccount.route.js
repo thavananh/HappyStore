@@ -3,7 +3,7 @@ import { checkSchema, matchedData, query, validationResult } from 'express-valid
 import {mockUsers} from './constant.js'
 import { createUserValidationSchema } from '../ultis/validationSchema.js'
 import {resolveIndexByUserId, loggingMiddleWare} from '../middleware/middleware.js'
-import userSchema from '../models/UserAccount.model.js'
+import userModel from '../models/UserAccount.model.js'
 import {hashPassword} from '../strategies/helper.js'
 
 const router = Router()
@@ -35,12 +35,12 @@ router.get('/api/users',
     },
 )
 //
-// router.get('/api/users/:id', resolveIndexByUserId, loggingMiddleWare, (req, res) => {
+// vue_router.get('/api/users/:id', resolveIndexByUserId, loggingMiddleWare, (req, res) => {
 //     const { findUserIndex } = req
 //     return res.send(mockUsers[findUserIndex])
 // })
 //
-// router.post(
+// vue_router.post(
 //     '/api/users',
 //     checkSchema(createUserValidationSchema),
 //     loggingMiddleWare,
@@ -57,19 +57,19 @@ router.get('/api/users',
 //
 //
 //
-// router.put('/api/users/:id', resolveIndexByUserId, loggingMiddleWare, (req, res) => {
+// vue_router.put('/api/users/:id', resolveIndexByUserId, loggingMiddleWare, (req, res) => {
 //     const { body, findUserIndex } = req
 //     mockUsers[findUserIndex] = { findUserIndex, ...body }
 //     return res.sendStatus(200)
 // })
 //
-// router.patch('/api/users/:id', resolveIndexByUserId, loggingMiddleWare, (req, res) => {
+// vue_router.patch('/api/users/:id', resolveIndexByUserId, loggingMiddleWare, (req, res) => {
 //     const { body, findUserIndex } = req
 //     mockUsers[findUserIndex] = { ...mockUsers[findUserIndex], ...body }
 //     return res.sendStatus(200)
 // })
 //
-// router.delete('/api/users/:id', resolveIndexByUserId, loggingMiddleWare, (req, res) => {
+// vue_router.delete('/api/users/:id', resolveIndexByUserId, loggingMiddleWare, (req, res) => {
 //     const { findUserIndex } = req
 //     mockUsers.splice(findUserIndex, 1)
 //     return res.sendStatus(200)
@@ -85,7 +85,7 @@ router.post('/api/users', checkSchema(createUserValidationSchema), async (req, r
     console.log(data.password)
     data.password = hashPassword(data.password)
     try {
-        const newUser = await userSchema.create(data)
+        const newUser = await userModel.create(data)
         console.log(`Create new user successfully`)
         return res.status(201).send(newUser)
     }
@@ -97,7 +97,7 @@ router.post('/api/users', checkSchema(createUserValidationSchema), async (req, r
 
 export async function getUser(username){
     try {
-        const findUser = await userSchema.findOne({
+        const findUser = await userModel.findOne({
             where: { username }
         })
         if (!findUser) throw new Error('User not found');

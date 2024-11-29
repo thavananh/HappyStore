@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize';
 
 // Cấu hình kết nối với cơ sở dữ liệu
-const sequelize = new Sequelize('testdb_learn', 'root', '', {
+const sequelize = new Sequelize('happy_store', 'root', '', {
     host: 'localhost',
     dialect: 'mysql',
     // Optional: Thêm một số cấu hình khác (tùy chọn)
@@ -15,3 +15,4 @@ const sequelize = new Sequelize('testdb_learn', 'root', '', {
 });
 
 export default sequelize;
+

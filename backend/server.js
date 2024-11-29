@@ -3,14 +3,14 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import sequelize from './database.js'
 import cors from 'cors'
-import userRouter from './UserAccount.route.js'
-import productRouter from './Product.route.js'
+import userRouter from './routes/UserAccount.route.js'
+import productRouter from './routes/Product.route.js'
 import { cookie } from 'express-validator'
 import cookieParser from 'cookie-parser'
 import session from 'express-session'
 import { mockUsers } from './constant.js'
 import passport from 'passport'
-import '../strategies/local-stategies.js'
+import './strategies/local-stategies.js'
 
 
 
