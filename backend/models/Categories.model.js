@@ -1,25 +1,38 @@
-import sequelize from '../database.js'
+
 import { DataTypes } from 'sequelize'
+import Database from '../database.js'
 
-const categoriesModel = sequelize.define('Categories', {
-    CategoryId: {
-        type: DataTypes.STRING(20),
-        primaryKey: true,
-        allowNull: false
-    },
-    CategoryName: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-    },
-    Description: {
-        type: DataTypes.TEXT,
+class CategoriesModel {
+    constructor() {
+        const db = new Database()
+        this.sequelize = db.getSequelize()
+        this.categories = this.sequelize.define('Categories', {
+            CategoryID: {
+                type: DataTypes.STRING(20),
+                primaryKey: true,
+                allowNull: false
+            },
+            CategoryName: {
+                type: DataTypes.STRING(100),
+                allowNull: false,
+            },
+            Description: {
+                type: DataTypes.TEXT,
+            }
+        }, {
+            tableName: "Categories",
+            timestamps: true,
+        })
     }
-}, {
-    tableName: "Categories",
-    timestamps: true,
-})
+    getCategories() {
+        return this.categories
+    }
+    async init() {
+        await this.sequelize.sync()
+    }
+}
 
-export default categoriesModel
+export default CategoriesModel
 
 
 /*

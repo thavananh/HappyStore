@@ -1,24 +1,39 @@
 import sequelize from '../database.js'
 import { DataTypes } from 'sequelize'
+import Database from '../database.js'
 
-export const Payment = sequelize.define('Payment', {
-    PaymentID: {
-        type: DataTypes.STRING(20),
-        primaryKey: true,
-        allowNull: false
-    },
-    PaymentMethod: {
-        type: DataTypes.STRING(20),
-        allowNull: true
-    },
-    Amount: {
-        type: DataTypes.DECIMAL(10, 3),
-        allowNull: true
+class PaymentModel {
+    constructor () {
+        const db = new Database()
+        this.sequelize = db.getSequelize()
+        this.payment = this.sequelize.define('Payment', {
+            PaymentID: {
+                type: DataTypes.STRING(20),
+                primaryKey: true,
+                allowNull: false
+            },
+            PaymentMethod: {
+                type: DataTypes.STRING(20),
+                allowNull: true
+            },
+            Amount: {
+                type: DataTypes.DECIMAL(10, 3),
+                allowNull: true
+            }
+        }, {
+            tableName: 'Payment',
+            timestamps: true
+        });
     }
-}, {
-    tableName: 'Payment',
-    timestamps: true
-});
+    getPayment() {
+        return this.payment;
+    }
+    async init() {
+        await this.sequelize.sync()
+    }
+}
+
+export default PaymentModel
 
 
 /*

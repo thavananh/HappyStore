@@ -1,18 +1,33 @@
 import { Sequelize } from 'sequelize';
 
-// Cấu hình kết nối với cơ sở dữ liệu
-const sequelize = new Sequelize('happy_store', 'root', '', {
-    host: 'localhost',
-    dialect: 'mysql',
-    // Optional: Thêm một số cấu hình khác (tùy chọn)
-    logging: false, // Tắt log SQL (tùy chọn)
-    pool: {
-        max: 5,
-        min: 0,
-        acquire: 30000,
-        idle: 10000
+
+class Database {
+    constructor() {
+        this.sequelize = new Sequelize('happy_store', 'root', '', {
+            host: 'localhost',
+            dialect: 'mysql',
+            logging: false, // Tắt log SQL (tùy chọn)
+            pool: {
+                max: 5,
+                min: 0,
+                acquire: 30000,
+                idle: 10000
+            }
+        });
     }
-});
 
-export default sequelize;
+    async connect() {
+        try {
+            await this.sequelize.authenticate();
+            console.log('Connection has been established successfully.');
+        } catch (error) {
+            console.error('Unable to connect to the database:', error);
+        }
+    }
 
+    getSequelize() {
+        return this.sequelize;
+    }
+}
+
+export default Database;

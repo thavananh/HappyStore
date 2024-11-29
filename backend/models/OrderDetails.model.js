@@ -1,45 +1,64 @@
-import sequelize from '../database.js'
+
 import { DataTypes } from 'sequelize'
-import ordersModel from './Orders.model.js'
+import Database from '../database.js'
+import OrdersModel from './Orders.model.js'
+import ProductsModel from './Products.model.js'
 
-export const OrderDetails = sequelize.define('OrderDetails', {
-    OrderDetailID: {
-        type: DataTypes.STRING(20),
-        primaryKey: true,
-        allowNull: false
-    },
-    OrderID: {
-        type: DataTypes.STRING(20),
-        allowNull: false,
-    },
-    ProductID: {
-        type: DataTypes.STRING(20),
-        allowNull: false,
-    },
-    Quantity: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    UnitPrice: {
-        type: DataTypes.DECIMAL(10, 3),
-        allowNull: true
+
+class OrderDetailsModel {
+    constructor() {
+        const db = new Database()
+        this.sequelize = db.getSequelize()
+        this.orderDetails = this.sequelize.define('OrderDetails', {
+            OrderDetailID: {
+                type: DataTypes.STRING(20),
+                primaryKey: true,
+                allowNull: false
+            },
+            OrderID: {
+                type: DataTypes.STRING(20),
+                allowNull: false,
+            },
+            ProductID: {
+                type: DataTypes.STRING(20),
+                allowNull: false,
+            },
+            Quantity: {
+                type: DataTypes.INTEGER,
+                allowNull: false
+            },
+            UnitPrice: {
+                type: DataTypes.DECIMAL(10, 3),
+                allowNull: true
+            }
+        }, {
+            tableName: 'OrderDetails',
+            timestamps: true  // Nếu không sử dụng các trường thời gian như createdAt, updatedAt
+        });
+
+        const orders = new OrdersModel().getOrders()
+
+        this.orderDetails.belongsTo(orders, {
+            foreignKey: 'OrderID',
+            targetKey: 'OrderID'
+        });
+
+        const products = new ProductsModel().getProducts()
+        this.orderDetails.belongsTo(products, {
+            foreignKey: 'ProductID',
+            targetKey: 'ProductID'
+        });
     }
-}, {
-    tableName: 'OrderDetails',
-    timestamps: true  // Nếu không sử dụng các trường thời gian như createdAt, updatedAt
-});
+    getOrderDetails() {
+        return this.orderDetails
+    }
+    async init() {
+        await this.sequelize.sync();
+    }
+}
 
-// Mối quan hệ giữa OrderDetails và Orders
-OrderDetails.belongsTo(ordersModel, {
-    foreignKey: 'OrderID',
-    targetKey: 'OrderID'
-});
 
-// Mối quan hệ giữa OrderDetails và Products
-OrderDetails.belongsTo(ordersModel, {
-    foreignKey: 'ProductID',
-    targetKey: 'ProductID'
-});
+export default OrderDetailsModel
 
 
 /*

@@ -1,35 +1,52 @@
 import sequelize from '../database.js'
 import { DataTypes } from 'sequelize'
-import customersModel from './Customers.model.js'
+import Database from '../database.js'
+import CustomersModel from './Customers.model.js'
 
-export const ordersModel = sequelize.define('Orders', {
-    OrderID: {
-        type: DataTypes.STRING(20),
-        primaryKey: true
-    },
-    CustomerID: {
-        type: DataTypes.STRING(20),
-        allowNull: false
-    },
-    TotalAmount: {
-        type: DataTypes.DECIMAL(10, 3),
-        allowNull: false
-    },
-    Status: {
-        type: DataTypes.STRING(20),
-        defaultValue: 'Pending'
+class OrdersModel {
+    constructor () {
+        const db = new Database()
+        this.sequelize = db.getSequelize()
+        this.orders = this.sequelize.define('Orders', {
+            OrderID: {
+                type: DataTypes.STRING(20),
+                primaryKey: true
+            },
+            CustomerID: {
+                type: DataTypes.STRING(20),
+                allowNull: false
+            },
+            TotalAmount: {
+                type: DataTypes.DECIMAL(10, 3),
+                allowNull: false
+            },
+            Status: {
+                type: DataTypes.STRING(20),
+                defaultValue: 'Pending'
+            }
+        }, {
+            tableName: 'Orders', // Tên bảng trong cơ sở dữ liệu
+            timestamps: true
+        });
+
+        const customers = new CustomersModel().getCustomers()
+
+        this.orders.belongsTo(customers, {
+            foreignKey: 'CustomerID',
+            targetKey: 'CustomerID',
+            onDelete: 'CASCADE',  // Xóa đơn hàng nếu khách hàng bị xóa
+            onUpdate: 'CASCADE'   // Cập nhật CustomerID nếu có thay đổi
+        });
     }
-}, {
-    tableName: 'Orders', // Tên bảng trong cơ sở dữ liệu
-    timestamps: true
-});
+    getOrders() {
+        return this.orders
+    }
+    async init() {
+        await this.sequelize.sync();
+    }
+}
 
-ordersModel.belongsTo(customersModel, {
-    foreignKey: 'CustomerID',
-    targetKey: 'CustomerID',
-    onDelete: 'CASCADE',  // Xóa đơn hàng nếu khách hàng bị xóa
-    onUpdate: 'CASCADE'   // Cập nhật CustomerID nếu có thay đổi
-});
+export default OrdersModel
 
 
 /*

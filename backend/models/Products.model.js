@@ -1,56 +1,60 @@
-import sequelize from '../database.js'
-import { DataTypes, INTEGER } from 'sequelize'
 
-export const productsModel = sequelize.define('Products', {
-    ProductId: {
-        type: DataTypes.STRING,
-        primaryKey: true,
-        allowNull: false,
-    },
-    ProductName: {
-        type: DataTypes.STRING(200),
-        allowNull: false,
-    },
-    CategoryId: {
-        type: DataTypes.STRING(20),
-        allowNull: false,
-    },
-    Price: {
-        type: DataTypes.DECIMAL(10, 3),
-        allowNull: false,
-    },
-    Stock: {
-        type: INTEGER,
-        defaultValue: 0,
-    },
-    Description: {
-        type: DataTypes.TEXT,
+import { DataTypes } from 'sequelize'
+import Database from '../database.js'
+import CategoriesModel from './Categories.model.js'
+
+class ProductsModel {
+    constructor () {
+        const db = new Database()
+        this.sequelize = db.getSequelize()
+        this.products = this.sequelize.define('Products', {
+            ProductID: {
+                type: DataTypes.STRING,
+                primaryKey: true,
+                allowNull: false,
+            },
+            ProductName: {
+                type: DataTypes.STRING(200),
+                allowNull: false,
+            },
+            CategoryID: {
+                type: DataTypes.STRING(20),
+                allowNull: false,
+            },
+            Price: {
+                type: DataTypes.DECIMAL(10, 3),
+                allowNull: false,
+            },
+            Stock: {
+                type: DataTypes.INTEGER,
+                defaultValue: 0,
+            },
+            Description: {
+                type: DataTypes.TEXT,
+            }
+        }, {
+            tableName: "Products",
+            timestamps: true,
+        })
+
+        const categories = new CategoriesModel().getCategories()
+
+        this.products.belongsTo(categories, {
+            foreignKey: 'CategoryID',
+            targetKey: 'CategoryID',
+            onDelete: 'CASCADE', // Xoá sản phẩm nếu loại hàng bị xoá
+            onUpdate: 'CASCADE' // Cập nhật CategoryId nếu bị thay đổi
+        })
     }
-}, {
-    tableName: "Products",
-    timestamps: true,
-})
-
-
-productsModel.associate = (models) => {
-    productsModel.belongsTo(model.Categories, {
-        foreignKey: 'CategoryId',
-        targetKey: 'ProductId',
-        onDelete: 'CASCADE', // Xoá sản phẩm nếu loại hàng bị xoá
-        onUpdate: 'CASCADE' // Cập nhật CategoryId nếu bị thay đổi
-    })
+    getProducts() {
+        return this.products
+    }
+    async init() {
+        await this.sequelize.sync();
+    }
 }
 
-
-// // Định nghĩa quan hệ giữa Orders và Customers
-// orders.associate = (models) => {
-//     orders.belongsTo(models.Customers, {
-//         foreignKey: 'CustomerID',
-//         targetKey: 'CustomerID',
-//         onDelete: 'CASCADE',  // Xóa đơn hàng nếu khách hàng bị xóa
-//         onUpdate: 'CASCADE'   // Cập nhật CustomerID nếu có thay đổi
-//     });
-// };
+export default ProductsModel
 
 
 /*

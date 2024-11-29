@@ -1,36 +1,50 @@
-import sequelize from "../database.js"
-import { DataTypes } from 'sequelize'
+import Database from '../database.js'
+import { DataTypes, Model as sequelize } from 'sequelize'
 
-export const suppliersModel = sequelize.define('Suppliers', {
-    SupplierID: {
-        type: DataTypes.STRING(20),
-        primaryKey: true,
-        allowNull: false
-    },
-    SupplierName: {
-        type: DataTypes.STRING(100),
-        allowNull: false
-    },
-    ContactName: {
-        type: DataTypes.STRING(100),
-        allowNull: true
-    },
-    PhoneNumber: {
-        type: DataTypes.STRING(20),
-        allowNull: true
-    },
-    Email: {
-        type: DataTypes.STRING(100),
-        allowNull: true
-    },
-    Address: {
-        type: DataTypes.TEXT,
-        allowNull: true
-    },
-}, {
-    tableName: 'Suppliers',
-    timestamps: true
-});
+class SuppliersModel {
+    constructor () {
+        const db = new Database()
+        this.sequelize = db.getSequelize()
+        this.suppliers = this.sequelize.define('Suppliers', {
+            SupplierID: {
+                type: DataTypes.STRING(20),
+                primaryKey: true,
+                allowNull: false
+            },
+            SupplierName: {
+                type: DataTypes.STRING(100),
+                allowNull: false
+            },
+            ContactName: {
+                type: DataTypes.STRING(100),
+                allowNull: true
+            },
+            PhoneNumber: {
+                type: DataTypes.STRING(20),
+                allowNull: true
+            },
+            Email: {
+                type: DataTypes.STRING(100),
+                allowNull: true
+            },
+            Address: {
+                type: DataTypes.TEXT,
+                allowNull: true
+            },
+        }, {
+            tableName: 'Suppliers',
+            timestamps: true
+        });
+    }
+    getSuppliers () {
+        return this.suppliers
+    }
+    async init() {
+        await this.sequelize.sync()
+    }
+}
+
+export default SuppliersModel;
 
 /*
 CREATE TABLE Suppliers (
