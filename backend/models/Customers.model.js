@@ -1,7 +1,7 @@
 import sequelize from '../database.js'
-import { DataTypes, INTEGER } from 'sequelize'
+import { DataTypes } from 'sequelize'
 
-const customersModel = sequelize.define('Customers', {
+export const customersModel = sequelize.define('Customers', {
     CustomerId: {
         type: DataTypes.STRING(20),
         primaryKey: true,
@@ -23,9 +23,11 @@ const customersModel = sequelize.define('Customers', {
     Address: {
         type: DataTypes.TEXT,
     }
+},{
+    tableName: 'Customers', // Tên bảng trong cơ sở dữ liệu
+    timestamps: true
 })
 
-export default customersModel
 
 /*
     CREATE TABLE Customers (

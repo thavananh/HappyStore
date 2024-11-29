@@ -1,7 +1,7 @@
 import sequelize from '../database.js'
 import { DataTypes, INTEGER } from 'sequelize'
 
-const productsModel = sequelize.define('Products', {
+export const productsModel = sequelize.define('Products', {
     ProductId: {
         type: DataTypes.STRING,
         primaryKey: true,

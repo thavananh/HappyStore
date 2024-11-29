@@ -2,7 +2,7 @@ import sequelize from '../database.js'
 import { DataTypes } from 'sequelize'
 import customersModel from './Customers.model.js'
 
-const ordersModel = sequelize.define('Orders', {
+export const ordersModel = sequelize.define('Orders', {
     OrderID: {
         type: DataTypes.STRING(20),
         primaryKey: true
@@ -24,15 +24,12 @@ const ordersModel = sequelize.define('Orders', {
     timestamps: true
 });
 
-// Định nghĩa quan hệ giữa Orders và Customers
-ordersModel.associate = (models) => {
-    ordersModel.belongsTo(models.Customers, {
-        foreignKey: 'CustomerID',
-        targetKey: 'CustomerID',
-        onDelete: 'CASCADE',  // Xóa đơn hàng nếu khách hàng bị xóa
-        onUpdate: 'CASCADE'   // Cập nhật CustomerID nếu có thay đổi
-    });
-};
+ordersModel.belongsTo(customersModel, {
+    foreignKey: 'CustomerID',
+    targetKey: 'CustomerID',
+    onDelete: 'CASCADE',  // Xóa đơn hàng nếu khách hàng bị xóa
+    onUpdate: 'CASCADE'   // Cập nhật CustomerID nếu có thay đổi
+});
 
 
 /*
