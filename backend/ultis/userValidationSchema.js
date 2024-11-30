@@ -38,7 +38,6 @@ export const createUserValidationSchema = {
             errorMessage: 'Email must be at least 6 characters with a max of 254 characters.',
         }
     }
-
 }
 
 

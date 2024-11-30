@@ -39,6 +39,9 @@ class CustomerAccountModel {
             targetKey: 'CustomerID',
         })
     }
+    getCustomerAccount() {
+        return this.user
+    }
     async init() {
         await this.sequelize.sync();
     }

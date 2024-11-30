@@ -9,7 +9,7 @@ const employeeAccount = new EmployeeAccountModel().getEmployeeAccount()
 
 
 
-router.post('/api/users/create', checkSchema(createUserValidationSchema), async (req, res) => {
+router.post('/api/employee/create', checkSchema(createUserValidationSchema), async (req, res) => {
     const result = validationResult(req)
     console.log(result)
     if (!result.isEmpty()) return res.status(404).send({ errors: result.array() })
