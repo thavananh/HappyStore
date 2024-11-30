@@ -7,7 +7,7 @@ class SuppliersModel {
         this.sequelize = db.getSequelize()
         this.suppliers = this.sequelize.define('Suppliers', {
             SupplierID: {
-                type: DataTypes.STRING(20),
+                type: DataTypes.STRING(36),
                 primaryKey: true,
                 allowNull: false
             },

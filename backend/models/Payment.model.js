@@ -8,12 +8,12 @@ class PaymentModel {
         this.sequelize = db.getSequelize()
         this.payment = this.sequelize.define('Payment', {
             PaymentID: {
-                type: DataTypes.STRING(20),
+                type: DataTypes.STRING(36),
                 primaryKey: true,
                 allowNull: false
             },
             PaymentMethod: {
-                type: DataTypes.STRING(20),
+                type: DataTypes.STRING(100),
                 allowNull: true
             },
             Amount: {

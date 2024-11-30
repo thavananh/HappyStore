@@ -9,12 +9,12 @@ class OrderPayment {
         this.sequelize = db.getSequelize()
         this.orderPayment = this.sequelize.define('OrderPayment', {
             PaymentID: {
-                type: DataTypes.STRING(20),
+                type: DataTypes.STRING(36),
                 primaryKey: true,
                 allowNull: false
             },
             OrderID: {
-                type: DataTypes.STRING(20),
+                type: DataTypes.STRING(36),
                 primaryKey: true,
                 allowNull: false
             }

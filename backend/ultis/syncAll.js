@@ -6,10 +6,11 @@ import OrderDetailsModel from '../models/OrderDetails.model.js'
 import PaymentModel from '../models/Payment.model.js'
 import OrderPayment from '../models/OrderPayment.model.js'
 import EmployeeModel from '../models/Employees.model.js'
-import UserAccountModel from '../models/UserAccount.model.js'
+import CustomerAccountModel from '../models/CustomerAccount.model.js'
 import SuppliersModel from '../models/Suppliers.model.js'
 import PurchaseOrdersSuppliersModel from '../models/PurchaseOrdersSupplier.model.js'
 import PurchaseOrderDetailsSupplierModel from '../models/PurchaseOrderDetailsSupplier.model.js'
+import EmployeeAccountModel from '../models/EmployeeAccount.model.js'
 
 const categories = new CategoriesModel()
 const products = new ProductsModel()
@@ -19,7 +20,8 @@ const orderDetails = new OrderDetailsModel()
 const payment = new PaymentModel()
 const orderPayment = new OrderPayment()
 const employees = new EmployeeModel()
-const userAccount = new UserAccountModel()
+const customerAccount = new CustomerAccountModel()
+const employeeAccount = new EmployeeAccountModel()
 const suppliers = new SuppliersModel()
 const purchaseOrdersSuppliers = new PurchaseOrdersSuppliersModel()
 const purchaseOrderDetailsSupplier = new PurchaseOrderDetailsSupplierModel()
@@ -34,7 +36,8 @@ export function syncAll() {
         payment.init(),
         orderPayment.init(),
         employees.init(),
-        userAccount.init(),
+        customerAccount.init(),
+        employeeAccount.init(),
         suppliers.init(),
         purchaseOrdersSuppliers.init(),
         purchaseOrderDetailsSupplier.init()

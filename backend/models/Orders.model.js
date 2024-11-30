@@ -9,11 +9,11 @@ class OrdersModel {
         this.sequelize = db.getSequelize()
         this.orders = this.sequelize.define('Orders', {
             OrderID: {
-                type: DataTypes.STRING(20),
+                type: DataTypes.STRING(36),
                 primaryKey: true
             },
             CustomerID: {
-                type: DataTypes.STRING(20),
+                type: DataTypes.STRING(36),
                 allowNull: false
             },
             TotalAmount: {
@@ -34,8 +34,6 @@ class OrdersModel {
         this.orders.belongsTo(customers, {
             foreignKey: 'CustomerID',
             targetKey: 'CustomerID',
-            onDelete: 'CASCADE',  // Xóa đơn hàng nếu khách hàng bị xóa
-            onUpdate: 'CASCADE'   // Cập nhật CustomerID nếu có thay đổi
         });
     }
     getOrders() {

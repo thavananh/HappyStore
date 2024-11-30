@@ -1,18 +1,20 @@
 import Database from '../database.js'
 import { DataTypes } from 'sequelize'
+import EmployeesModel from './Employees.model.js'
 
-class UserAccountModel {
+
+class EmployeeAccountModel {
     constructor() {
         const db = new Database()
         this.sequelize = db.getSequelize()
-        this.User = this. sequelize.define('UserAccount', {
+        this.user = this. sequelize.define('UserAccount', {
             UserID: {
-                type: DataTypes.STRING(20),
+                type: DataTypes.STRING(36),
                 primaryKey: true,
                 allowNull: false
             },
             Username: {
-                type: DataTypes.STRING(50),
+                type: DataTypes.STRING,
                 allowNull: false,
                 unique: true
             },
@@ -20,27 +22,30 @@ class UserAccountModel {
                 type: DataTypes.STRING(255),
                 allowNull: false
             },
-            Role: {
-                type: DataTypes.STRING(50),
-                defaultValue: 'User',
-                allowNull: true
+            Email: {
+                type: DataTypes.STRING(100),
+                allowNull: false,
             },
             EmployeeID: {
-                type: DataTypes.STRING(20),
-                allowNull: true
-            },
-            CustomerID: {
-                type: DataTypes.STRING(20),
+                type: DataTypes.STRING(36),
                 allowNull: true
             },
         }, {
-            tableName: 'UserAccount',
+            tableName: 'EmployeeAccount',
             timestamps: true
         });
+        const employees = new EmployeesModel().getEmployees()
+        this.user.belongsTo(employees, {
+            foreignKey: 'EmployeeID',
+            targetKey: 'EmployeeID',
+        })
+    }
+    getEmployeeAccount() {
+        return this.user
     }
     async init() {
         await this.sequelize.sync();
     }
 }
 
-export default UserAccountModel;
+export default EmployeeAccountModel;

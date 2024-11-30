@@ -8,7 +8,7 @@ class CategoriesModel {
         this.sequelize = db.getSequelize()
         this.categories = this.sequelize.define('Categories', {
             CategoryID: {
-                type: DataTypes.STRING(20),
+                type: DataTypes.STRING(36),
                 primaryKey: true,
                 allowNull: false
             },

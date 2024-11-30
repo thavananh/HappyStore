@@ -8,12 +8,12 @@ class PurchaseOrdersSuppliersModel {
         this.sequelize = db.getSequelize()
         this.purchaseOrdersSuppliers = this.sequelize.define('PurchaseOrders_Suppliers', {
             PurchaseOrderID: {
-                type: DataTypes.STRING(20),
+                type: DataTypes.STRING(36),
                 primaryKey: true,
                 allowNull: false
             },
             SupplierID: {
-                type: DataTypes.STRING(20),
+                type: DataTypes.STRING(36),
                 allowNull: true
             },
             TotalAmount: {

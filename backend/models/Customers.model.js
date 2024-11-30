@@ -8,26 +8,35 @@ class CustomersModel {
         this.sequelize = db.getSequelize()
         this.customer = this.sequelize.define('Customers', {
             CustomerID: {
-                type: DataTypes.STRING(20),
+                type: DataTypes.STRING(36),
                 primaryKey: true,
                 allowNull: false,
             },
             FirstName: {
-                type: DataTypes.STRING(50),
+                type: DataTypes.STRING(100),
                 allowNull: false,
             },
             LastName: {
-                type: DataTypes.STRING(50),
+                type: DataTypes.STRING(100),
+                allowNull: true,
             },
-            Phone: {
+            PhoneNumber: {
                 type: DataTypes.STRING(20),
+                allowNull: true,
             },
             Email: {
                 type: DataTypes.STRING(100),
+                allowNull: false,
             },
             Address: {
                 type: DataTypes.TEXT,
-            }
+                allowNull: true,
+            },
+            CustomerType: {
+                type: DataTypes.STRING(50),
+                defaultValue: 'Regular',
+                allowNull: true
+            },
         },{
             tableName: 'Customers', // Tên bảng trong cơ sở dữ liệu
             timestamps: true

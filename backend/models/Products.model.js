@@ -9,7 +9,7 @@ class ProductsModel {
         this.sequelize = db.getSequelize()
         this.products = this.sequelize.define('Products', {
             ProductID: {
-                type: DataTypes.STRING,
+                type: DataTypes.STRING(36),
                 primaryKey: true,
                 allowNull: false,
             },
@@ -18,7 +18,7 @@ class ProductsModel {
                 allowNull: false,
             },
             CategoryID: {
-                type: DataTypes.STRING(20),
+                type: DataTypes.STRING(36),
                 allowNull: false,
             },
             Price: {

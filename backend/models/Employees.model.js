@@ -8,30 +8,39 @@ class EmployeesModel {
         this.sequelize = db.getSequelize()
         this.employees = this.sequelize.define('Employees', {
             EmployeeID: {
-                type: DataTypes.STRING(20),
+                type: DataTypes.STRING(36),
                 primaryKey: true,
                 allowNull: false
             },
-            FullName: {
+            FirstName: {
                 type: DataTypes.STRING(100),
-                allowNull: false
+                allowNull: false,
+            },
+            LastName: {
+                type: DataTypes.STRING(100),
+                allowNull: true,
             },
             PhoneNumber: {
                 type: DataTypes.STRING(20),
-                allowNull: true
+                allowNull: false
             },
             Email: {
                 type: DataTypes.STRING(100),
-                allowNull: true
+                allowNull: false
             },
             Position: {
                 type: DataTypes.STRING(50),
-                allowNull: true
+                allowNull: false
             },
             Status: {
                 type: DataTypes.STRING(50),
+                allowNull: false
+            },
+            Role: {
+                type: DataTypes.STRING(50),
+                defaultValue: 'User',
                 allowNull: true
-            }
+            },
         }, {
             tableName: 'Employees',
             timestamps: true

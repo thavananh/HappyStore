@@ -10,16 +10,16 @@ class PurchaseOrderDetailsModel {
         this.sequelize = db.getSequelize()
         this.purchaseOrderDetails = this.sequelize.define('PurchaseOrderDetailsSupplier', {
             PurchaseOrderDetailID: {
-                type: DataTypes.STRING(20),
+                type: DataTypes.STRING(36),
                 primaryKey: true,
                 allowNull: false
             },
             PurchaseOrderID: {
-                type: DataTypes.STRING(20),
+                type: DataTypes.STRING(36),
                 allowNull: true
             },
             ProductID: {
-                type: DataTypes.STRING(20),
+                type: DataTypes.STRING(36),
                 allowNull: true
             },
             Quantity: {

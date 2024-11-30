@@ -11,16 +11,16 @@ class OrderDetailsModel {
         this.sequelize = db.getSequelize()
         this.orderDetails = this.sequelize.define('OrderDetails', {
             OrderDetailID: {
-                type: DataTypes.STRING(20),
+                type: DataTypes.STRING(36),
                 primaryKey: true,
                 allowNull: false
             },
             OrderID: {
-                type: DataTypes.STRING(20),
+                type: DataTypes.STRING(36),
                 allowNull: false,
             },
             ProductID: {
-                type: DataTypes.STRING(20),
+                type: DataTypes.STRING(36),
                 allowNull: false,
             },
             Quantity: {
