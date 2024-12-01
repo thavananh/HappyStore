@@ -1,6 +1,6 @@
 import {Router} from 'express';
 import { checkSchema, matchedData, query, validationResult } from 'express-validator'
-import {createUserValidationSchema} from '../ultis/userValidationSchema.js'
+import {createUserValidationSchema} from '../ultis/customerValidationSchema.js'
 import { hashPassword } from '../strategies/helper.js'
 import EmployeeAccountModel from '../models/EmployeeAccount.model.js'
 

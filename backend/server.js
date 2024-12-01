@@ -11,6 +11,7 @@ import './strategies/local-stategies.js'
 import './ultis/syncAll.js'
 import Database from './database.js'
 import { syncAll } from './ultis/syncAll.js'
+import customerAccountAPI from './routes/CustomerAccountAPI.js'
 
 // Initialize the Express app
 const app = express()
@@ -18,8 +19,9 @@ const app = express()
 const db = new Database()
 db.connect().then(() => {
     console.log('Connected')
+    syncAll()
 })
-syncAll()
+
 
 app.use(express.json())
 app.use(cookieParser('hello_world'))
@@ -37,6 +39,7 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(customerAccountAPI)
 
 // Middleware setup
 

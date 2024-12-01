@@ -27,27 +27,61 @@ const purchaseOrdersSuppliers = new PurchaseOrdersSuppliersModel()
 const purchaseOrderDetailsSupplier = new PurchaseOrderDetailsSupplierModel()
 
 export function syncAll() {
-    Promise.all([
-        categories.init(),
-        products.init(),
-        customers.init(),
-        orders.init(),
-        orderDetails.init(),
-        payment.init(),
-        orderPayment.init(),
-        employees.init(),
-        customerAccount.init(),
-        employeeAccount.init(),
-        suppliers.init(),
-        purchaseOrdersSuppliers.init(),
-        purchaseOrderDetailsSupplier.init()
-    ])
+    categories.init()
         .then(() => {
-            console.log('All models initialized')
+            console.log('Categories initialized');
+            return products.init();
+        })
+        .then(() => {
+            console.log('Products initialized');
+            return customers.init();
+        })
+        .then(() => {
+            console.log('Customers initialized');
+            return orders.init();
+        })
+        .then(() => {
+            console.log('Orders initialized');
+            return orderDetails.init();
+        })
+        .then(() => {
+            console.log('OrderDetails initialized');
+            return payment.init();
+        })
+        .then(() => {
+            console.log('Payment initialized');
+            return orderPayment.init();
+        })
+        .then(() => {
+            console.log('OrderPayment initialized');
+            return employees.init();
+        })
+        .then(() => {
+            console.log('Employees initialized');
+            return customerAccount.init();
+        })
+        .then(() => {
+            console.log('CustomerAccount initialized');
+            return employeeAccount.init();
+        })
+        .then(() => {
+            console.log('EmployeeAccount initialized');
+            return suppliers.init();
+        })
+        .then(() => {
+            console.log('Suppliers initialized');
+            return purchaseOrdersSuppliers.init();
+        })
+        .then(() => {
+            console.log('PurchaseOrdersSuppliers initialized');
+            return purchaseOrderDetailsSupplier.init();
+        })
+        .then(() => {
+            console.log('PurchaseOrderDetailsSupplier initialized');
+            console.log('All models initialized');
         })
         .catch((error) => {
-            console.error('Error initializing models:', error)
-        })
+            console.error('Error initializing models:', error);
+        });
 }
-
 

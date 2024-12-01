@@ -6,7 +6,7 @@ class CustomerAccountModel {
     constructor() {
         const db = new Database()
         this.sequelize = db.getSequelize()
-        this.user = this. sequelize.define('UserAccount', {
+        this.user = this. sequelize.define('CustomerAccount', {
             UserID: {
                 type: DataTypes.STRING(36),
                 primaryKey: true,
@@ -25,9 +25,13 @@ class CustomerAccountModel {
                 type: DataTypes.STRING(100),
                 allowNull: false,
             },
+            PhoneNumber: {
+                type: DataTypes.STRING(20),
+                allowNull: true
+            },
             CustomerID: {
                 type: DataTypes.STRING(36),
-                allowNull: true
+                allowNull: false,
             },
         }, {
             tableName: 'CustomerAccount',

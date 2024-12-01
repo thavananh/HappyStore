@@ -9,11 +9,11 @@ class CustomerDTO {
     constructor(data) {
         this.CustomerID = data.CustomerID;
         this.FirstName = data.FirstName;
-        this.LastName = data.LastName;
-        this.PhoneNumber = data.PhoneNumber;
-        this.Email = data.email;
-        this.Address = data.Address;
-        this.CustomerType = data.CustomerType;
+        this.LastName = data.LastName || "";
+        this.PhoneNumber = data.PhoneNumber || "";
+        this.Email = data.Email || "";
+        this.Address = data.Address || "";
+        this.CustomerType = data.CustomerType || "Regular";
     }
 }
 

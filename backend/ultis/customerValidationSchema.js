@@ -13,10 +13,14 @@ export const createUserValidationSchema = {
         isString: {
             errorMessage: 'Username must be a string',
         },
+        matches: {
+            options: [/^\S+$/], // Regex to ensure no spaces
+            errorMessage: 'Username must not contain spaces.',
+        },
     },
     Password: {
         notEmpty: {
-            errorMessage: 'password cannot be empty',
+            errorMessage: 'Password cannot be empty',
         },
         isLength: {
             options: {
@@ -24,7 +28,11 @@ export const createUserValidationSchema = {
                 max: 32,
             },
             errorMessage: 'Password must be at least 8 characters with a max of 32 characters.',
-        }
+        },
+        matches: {
+            options: [/^\S+$/], // Regex to ensure no spaces
+            errorMessage: 'Password must not contain spaces.',
+        },
     },
     Email: {
         notEmpty: {
@@ -36,8 +44,27 @@ export const createUserValidationSchema = {
                 max: 254,
             },
             errorMessage: 'Email must be at least 6 characters with a max of 254 characters.',
+        },
+        matches: {
+            options: [/^\S+$/], // Regex to ensure no spaces
+            errorMessage: 'Email must not contain spaces.',
+        },
+    },
+    FirstName: {
+        notEmpty: {
+            errorMessage: 'First name cannot be empty',
+        },
+        isString: {
+            errorMessage: 'Name must be a string',
         }
+    },
+    PhoneNumber: {
+        notEmpty: {
+            errorMessage: 'Phone number cannot be empty',
+        },
+        matches: {
+            options: [/^\S+$/], // Regex to ensure no spaces
+            errorMessage: 'Username must not contain spaces.',
+        },
     }
 }
-
-

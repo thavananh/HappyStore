@@ -1,14 +1,16 @@
 class CustomerAccountDTO {
     UserID;
-    UserName;
+    Username;
     PasswordHash;
     Email;
+    PhoneNumber;
     CustomerID;
     constructor(data) {
         this.UserID = data.UserID;
-        this.UserName = data.UserName;
+        this.Username = data.UserName;
         this.PasswordHash = data.PasswordHash;
-        this.Email = data.email;
+        this.Email = data.Email;
+        this.PhoneNumber = data.PhoneNumber;
         this.CustomerID = data.CustomerID;
     }
 }

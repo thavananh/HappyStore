@@ -42,8 +42,6 @@ class ProductsModel {
         this.products.belongsTo(categories, {
             foreignKey: 'CategoryID',
             targetKey: 'CategoryID',
-            onDelete: 'CASCADE', // Xoá sản phẩm nếu loại hàng bị xoá
-            onUpdate: 'CASCADE' // Cập nhật CategoryId nếu bị thay đổi
         })
     }
     getProducts() {

@@ -26,7 +26,7 @@ class CustomersModel {
             },
             Email: {
                 type: DataTypes.STRING(100),
-                allowNull: false,
+                allowNull: true,
             },
             Address: {
                 type: DataTypes.TEXT,
