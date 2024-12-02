@@ -7,6 +7,7 @@ import Login from '@/components/Login/Login.vue'
 import Registration from '@/components/Login/Registration.vue'
 import StorePage from '@/pages/StorePage.vue'
 import ShopPage from '@/pages/ShopPage.vue'
+import ProductDetails from '@/pages/ProductDetails.vue'
 
 const routes = [
     {
@@ -18,6 +19,11 @@ const routes = [
         path: '/shop',
         name: 'Shop',
         component: ShopPage,
+    },
+    {
+        path: '/product_details',
+        name: 'ProductDetails',
+        component: ProductDetails,
     }
     ,{
         path: '/login',
