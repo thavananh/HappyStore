@@ -3,21 +3,40 @@ import { createWebHistory, createRouter } from "vue-router";
 import LoginPage from '@/pages/LoginPage.vue'
 import DashboardPage from '@/pages/DashboardPage.vue'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
+import Login from '@/components/Login/Login.vue'
+import Registration from '@/components/Login/Registration.vue'
+import StorePage from '@/pages/StorePage.vue'
 
 const routes = [
     {
         path: '/',
-        name: 'login',
-        component: LoginPage
+        name: 'Home',
+        component: StorePage
+    }
+    ,{
+        path: '/login',
+        component: LoginPage,
+        children: [
+            {
+                path: '',
+                name: 'Login',
+                component: Login,
+            },
+            {
+                path: '/register',
+                name: 'Registration',
+                component: Registration
+            }
+        ]
     },
     {
         path: '/dashboard',
-        name: 'dashboard',
+        name: 'Dashboard',
         component: DashboardPage
     },
     {
         path: '/default_layout',
-        name: 'default_layout',
+        name: 'Default_layout',
         component: DefaultLayout
     }
 ]

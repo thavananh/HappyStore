@@ -15,6 +15,20 @@ class CustomerDTO {
         this.Address = data.Address || "";
         this.CustomerType = data.CustomerType || "Regular";
     }
+
+    // getAllData() {
+    //     {
+    //         return {
+    //             CustomerID: this.CustomerID,
+    //             FirstName: this.FirstName,
+    //             LastName: this.LastName,
+    //             PhoneNumber: this.PhoneNumber,
+    //             Email: this.Email,
+    //             Address: this.Address,
+    //             CustomerType: this.CustomerType,
+    //         }
+    //     }
+    // }
 }
 
 export default CustomerDTO;

@@ -45,7 +45,7 @@ router.post('/api/customer_account/create', checkSchema(createUserValidationSche
     const customerAccountData = new CustomerAccountDTO(
         {
             UserID: uuidv4(),
-            UserName: data.Username,
+            Username: data.Username,
             PasswordHash: data.Password,
             Email: data.Email,
             PhoneNumber: data.PhoneNumber,
