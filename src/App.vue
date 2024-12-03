@@ -1,6 +1,6 @@
 <script setup>
 
-import DefaultLayout from '@/layouts/DefaultLayout.vue'
+
 import LoginPage from '@/pages/LoginPage.vue'
 </script>
 

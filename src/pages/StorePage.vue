@@ -66,8 +66,8 @@ const products = ref([
                             </div>
                             <nav class="navbar">
                                 <ul class="navbar_menu">
-                                    <li><a href="#">home</a></li>
-                                    <li><a href="#">shop</a></li>
+                                    <li><router-link to="">home</router-link></li>
+                                    <li><router-link to="/shop">shop</router-link></li>
                                     <li><a href="#">promotion</a></li>
                                     <li><a href="#">pages</a></li>
                                     <li><a href="#">blog</a></li>
@@ -107,7 +107,7 @@ const products = ref([
                             <li><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
                         </ul>
                     </li>
-                    <li class="menu_item"><router-link to="/">home</router-link></li>
+                    <li class="menu_item"><router-link to="">home</router-link></li>
                     <li class="menu_item"><router-link to="/shop">shop</router-link></li>
                     <li class="menu_item"><a href="#">promotion</a></li>
                     <li class="menu_item"><a href="#">pages</a></li>

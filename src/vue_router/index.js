@@ -2,12 +2,14 @@ import { createWebHistory, createRouter } from "vue-router";
 
 import LoginPage from '@/pages/LoginPage.vue'
 import DashboardPage from '@/pages/DashboardPage.vue'
-import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import Login from '@/components/Login/Login.vue'
 import Registration from '@/components/Login/Registration.vue'
 import StorePage from '@/pages/StorePage.vue'
 import ShopPage from '@/pages/ShopPage.vue'
 import ProductDetails from '@/pages/ProductDetails.vue'
+import OverView_Dashboard from '@/layouts/OverView_Dashboard.vue'
+import Product_Dashboard from '@/layouts/Product_Dashboard.vue'
+import ThuNghiem from '@/components/GiaoDienThuNghiem/ThuNghiem.vue'
 
 const routes = [
     {
@@ -43,13 +45,24 @@ const routes = [
     },
     {
         path: '/dashboard',
-        name: 'Dashboard',
-        component: DashboardPage
+        component: DashboardPage,
+        children: [
+            {
+                path: '',
+                name: 'Overview_Dashboard',
+                component: OverView_Dashboard
+            },
+            {
+                path: '/product_dashboard',
+                name: 'Product_Dashboard',
+                component: Product_Dashboard,
+            }
+        ]
     },
     {
-        path: '/default_layout',
-        name: 'Default_layout',
-        component: DefaultLayout
+        path: '/thu_nghiem',
+        name: 'Thu_nghiem',
+        component: ThuNghiem
     }
 ]
 

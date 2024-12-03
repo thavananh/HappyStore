@@ -11,16 +11,16 @@
             <div class="list-container" style="width: 100%">
                 <ul class="nav nav-pills d-flex flex-column" data-bs-parrent="#sidebar">
                     <li class="nav-item">
-                        <a href="#" class="nav-link" aria-current="page">
+                        <router-link to="/dashboard" href="#" class="nav-link" aria-current="page">
                             <i class="fa-solid fa-grid-2 fa-xs icon"></i>
                             <span>Tổng quan</span>
-                        </a>
+                        </router-link>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <router-link class="nav-link" to="product_dashboard">
                             <i class="fa-solid fa-boxes-stacked fa-xs icon"></i>
                             <span>Sản phẩm</span>
-                        </a>
+                        </router-link>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
