@@ -1,4 +1,13 @@
 <script setup>
+import LogoHappyStore from '@/assets/images/logo/LogoHappyStore_NenTrang.png';
+import { ref } from 'vue';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules'
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
 import slider_1 from '@/assets/images/slider_1.jpg'
 import banner_1 from '@/assets/images/banner_1.jpg'
 import banner_2 from '@/assets/images/banner_2.jpg'
@@ -27,82 +36,39 @@ import single_2 from '@/assets/images/single_2.jpg'
 import single_2_thumb from '@/assets/images/single_2_thumb.jpg'
 import single_3 from '@/assets/images/single_3.jpg'
 import single_3_thumb from '@/assets/images/single_3_thumb.jpg'
+
+// Biến trạng thái để kiểm soát hamburger menu
+const isHamburgerMenuOpen = ref(false);
+
+// Hàm mở hamburger menu
+const openHamburgerMenu = () => {
+    isHamburgerMenuOpen.value = true;
+};
+
+// Hàm đóng hamburger menu
+const closeHamburgerMenu = () => {
+    isHamburgerMenuOpen.value = false;
+};
+
+const products = ref([
+    { id: 1, image: product_1, name: 'Fujifilm X100T 16 MP Digital Camera (Silver)', price: '$520.00', oldPrice: '$590.00', discount: '-$20' },
+    { id: 2, image: product_2, name: 'Product 2 Name', price: '$430.00', oldPrice: '$500.00', discount: '-$70' },
+    { id: 3, image: product_3, name: 'Product 3 Name', price: '$320.00', oldPrice: '$400.00', discount: '-$80' },
+    { id: 4, image: product_4, name: 'Product 4 Name', price: '$210.00', oldPrice: '$300.00', discount: '-$90' },
+    { id: 5, image: product_5, name: 'Product 5 Name', price: '$150.00', oldPrice: '$200.00', discount: '-$50' },
+    { id: 6, image: product_6, name: 'Product 5 Name', price: '$150.00', oldPrice: '$200.00', discount: '-$50' },
+    { id: 7, image: product_7, name: 'Product 5 Name', price: '$150.00', oldPrice: '$200.00', discount: '-$50' },
+    { id: 8, image: product_8, name: 'Product 5 Name', price: '$150.00', oldPrice: '$200.00', discount: '-$50' },
+    { id: 9, image: product_9, name: 'Product 5 Name', price: '$150.00', oldPrice: '$200.00', discount: '-$50' },
+    { id: 10, image: product_10, name: 'Product 5 Name', price: '$150.00', oldPrice: '$200.00', discount: '-$50' },
+]);
 </script>
+
+
 
 <template>
     <div class="super_container">
-        <!-- Header -->
-
         <header class="header trans_300">
-            <!-- Top Navigation -->
-
-            <div class="top_nav">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="top_nav_left">free shipping on all u.s orders over $50</div>
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <div class="top_nav_right">
-                                <ul class="top_nav_menu">
-                                    <!-- Currency / Language / My Account -->
-
-                                    <li class="currency">
-                                        <a href="#">
-                                            usd
-                                            <i class="fa fa-angle-down"></i>
-                                        </a>
-                                        <ul class="currency_selection">
-                                            <li><a href="#">cad</a></li>
-                                            <li><a href="#">aud</a></li>
-                                            <li><a href="#">eur</a></li>
-                                            <li><a href="#">gbp</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="language">
-                                        <a href="#">
-                                            English
-                                            <i class="fa fa-angle-down"></i>
-                                        </a>
-                                        <ul class="language_selection">
-                                            <li><a href="#">French</a></li>
-                                            <li><a href="#">Italian</a></li>
-                                            <li><a href="#">German</a></li>
-                                            <li><a href="#">Spanish</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="account">
-                                        <a href="#">
-                                            My Account
-                                            <i class="fa fa-angle-down"></i>
-                                        </a>
-                                        <ul class="account_selection">
-                                            <li>
-                                                <a href="#"
-                                                    ><i class="fa fa-sign-in" aria-hidden="true"></i
-                                                    >Sign In</a
-                                                >
-                                            </li>
-                                            <li>
-                                                <a href="#"
-                                                    ><i
-                                                        class="fa fa-user-plus"
-                                                        aria-hidden="true"
-                                                    ></i
-                                                    >Register</a
-                                                >
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Main Navigation -->
-
             <div class="main_nav_container">
                 <div class="container">
                     <div class="row">
@@ -112,34 +78,25 @@ import single_3_thumb from '@/assets/images/single_3_thumb.jpg'
                             </div>
                             <nav class="navbar">
                                 <ul class="navbar_menu">
-                                    <li><a href="index.html">home</a></li>
-                                    <li><a href="#">shop</a></li>
+                                    <li><router-link to="">home</router-link></li>
+                                    <li><router-link to="/shop">shop</router-link></li>
                                     <li><a href="#">promotion</a></li>
                                     <li><a href="#">pages</a></li>
                                     <li><a href="#">blog</a></li>
                                     <li><a href="contact.html">contact</a></li>
                                 </ul>
                                 <ul class="navbar_user">
-                                    <li>
-                                        <a href="#"
-                                            ><i class="fa fa-search" aria-hidden="true"></i
-                                        ></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                            ><i class="fa fa-user" aria-hidden="true"></i
-                                        ></a>
-                                    </li>
+                                    <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
                                     <li class="checkout">
                                         <a href="#">
                                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                            <span id="checkout_items" class="checkout_items"
-                                                >2</span
-                                            >
+                                            <span id="checkout_items" class="checkout_items">2</span>
                                         </a>
                                     </li>
                                 </ul>
-                                <div class="hamburger_container">
+                                <!-- Thêm @click để mở hamburger menu -->
+                                <div class="hamburger_container" @click="openHamburgerMenu">
                                     <i class="fa fa-bars" aria-hidden="true"></i>
                                 </div>
                             </nav>
@@ -149,58 +106,25 @@ import single_3_thumb from '@/assets/images/single_3_thumb.jpg'
             </div>
         </header>
 
-        <div class="fs_menu_overlay"></div>
-
-        <!-- Hamburger Menu -->
-
-        <div class="hamburger_menu">
-            <div class="hamburger_close"><i class="fa fa-times" aria-hidden="true"></i></div>
+        <!-- Hamburger -->
+        <!-- Overlay để đóng menu khi nhấp vào ngoài -->
+        <div class="fs_menu_overlay" v-if="isHamburgerMenuOpen" @click="closeHamburgerMenu"></div>
+        <div class="hamburger_menu" :class="{ 'hamburger_menu_open': isHamburgerMenuOpen }">
+        <div class="hamburger_close" @click="closeHamburgerMenu"><i class="fa fa-times" aria-hidden="true"></i></div>
             <div class="hamburger_menu_content text-right">
                 <ul class="menu_top_nav">
-                    <li class="menu_item has-children">
-                        <a href="#">
-                            usd
-                            <i class="fa fa-angle-down"></i>
-                        </a>
-                        <ul class="menu_selection">
-                            <li><a href="#">cad</a></li>
-                            <li><a href="#">aud</a></li>
-                            <li><a href="#">eur</a></li>
-                            <li><a href="#">gbp</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu_item has-children">
-                        <a href="#">
-                            English
-                            <i class="fa fa-angle-down"></i>
-                        </a>
-                        <ul class="menu_selection">
-                            <li><a href="#">French</a></li>
-                            <li><a href="#">Italian</a></li>
-                            <li><a href="#">German</a></li>
-                            <li><a href="#">Spanish</a></li>
-                        </ul>
-                    </li>
                     <li class="menu_item has-children">
                         <a href="#">
                             My Account
                             <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="menu_selection">
-                            <li>
-                                <a href="#"
-                                    ><i class="fa fa-sign-in" aria-hidden="true"></i>Sign In</a
-                                >
-                            </li>
-                            <li>
-                                <a href="#"
-                                    ><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a
-                                >
-                            </li>
+                            <li><a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i>Sign In</a></li>
+                            <li><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
                         </ul>
                     </li>
-                    <li class="menu_item"><a href="#">home</a></li>
-                    <li class="menu_item"><a href="#">shop</a></li>
+                    <li class="menu_item"><router-link to="">home</router-link></li>
+                    <li class="menu_item"><router-link to="/shop">shop</router-link></li>
                     <li class="menu_item"><a href="#">promotion</a></li>
                     <li class="menu_item"><a href="#">pages</a></li>
                     <li class="menu_item"><a href="#">blog</a></li>
@@ -209,565 +133,194 @@ import single_3_thumb from '@/assets/images/single_3_thumb.jpg'
             </div>
         </div>
 
-        <div class="container product_section_container">
-            <div class="row">
-                <div class="col product_section clearfix">
-                    <!-- Breadcrumbs -->
+        <!-- Slider -->
 
-                    <div class="breadcrumbs d-flex flex-row align-items-center">
-                        <ul>
-                            <li><a href="index.html">Home</a></li>
-                            <li class="active">
-                                <a href="index.html"
-                                    ><i class="fa fa-angle-right" aria-hidden="true"></i>Men's</a
-                                >
-                            </li>
-                        </ul>
+        <div class="main_slider" style="background-image:url(src/assets/images/slider_1.jpg)">
+            <div class="container fill_height">
+                <div class="row align-items-center fill_height">
+                    <div class="col">
+                        <div class="main_slider_content">
+                            <h6>Spring / Summer Collection 2017</h6>
+                            <h1>Get up to 30% Off New Arrivals</h1>
+                            <div class="red_button shop_now_button"><a href="#">shop now</a></div>
+                        </div>
                     </div>
+                </div>
+            </div>
+        </div>
 
-                    <!-- Sidebar -->
+        <!-- Banner -->
 
-                    <div class="sidebar">
-                        <div class="sidebar_section">
-                            <div class="sidebar_title">
-                                <h5>Product Category</h5>
-                            </div>
-                            <ul class="sidebar_categories">
-                                <li><a href="#">Men</a></li>
-                                <li class="active">
-                                    <a href="#"
-                                        ><span
-                                            ><i
-                                                class="fa fa-angle-double-right"
-                                                aria-hidden="true"
-                                            ></i></span
-                                        >Women</a
-                                    >
-                                </li>
-                                <li><a href="#">Accessories</a></li>
-                                <li><a href="#">New Arrivals</a></li>
-                                <li><a href="#">Collection</a></li>
-                                <li><a href="#">Shop</a></li>
-                            </ul>
-                        </div>
-
-                        <!-- Price Range Filtering -->
-                        <div class="sidebar_section">
-                            <div class="sidebar_title">
-                                <h5>Filter by Price</h5>
-                            </div>
-                            <p>
-                                <input
-                                    type="text"
-                                    id="amount"
-                                    readonly
-                                    style="border: 0; color: #f6931f; font-weight: bold"
-                                />
-                            </p>
-                            <div id="slider-range"></div>
-                            <div class="filter_button"><span>filter</span></div>
-                        </div>
-
-                        <!-- Sizes -->
-                        <div class="sidebar_section">
-                            <div class="sidebar_title">
-                                <h5>Sizes</h5>
-                            </div>
-                            <ul class="checkboxes">
-                                <li>
-                                    <i class="fa fa-square-o" aria-hidden="true"></i><span>S</span>
-                                </li>
-                                <li class="active">
-                                    <i class="fa fa-square" aria-hidden="true"></i><span>M</span>
-                                </li>
-                                <li>
-                                    <i class="fa fa-square-o" aria-hidden="true"></i><span>L</span>
-                                </li>
-                                <li>
-                                    <i class="fa fa-square-o" aria-hidden="true"></i><span>XL</span>
-                                </li>
-                                <li>
-                                    <i class="fa fa-square-o" aria-hidden="true"></i
-                                    ><span>XXL</span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- Color -->
-                        <div class="sidebar_section">
-                            <div class="sidebar_title">
-                                <h5>Color</h5>
-                            </div>
-                            <ul class="checkboxes">
-                                <li>
-                                    <i class="fa fa-square-o" aria-hidden="true"></i
-                                    ><span>Black</span>
-                                </li>
-                                <li class="active">
-                                    <i class="fa fa-square" aria-hidden="true"></i><span>Pink</span>
-                                </li>
-                                <li>
-                                    <i class="fa fa-square-o" aria-hidden="true"></i
-                                    ><span>White</span>
-                                </li>
-                                <li>
-                                    <i class="fa fa-square-o" aria-hidden="true"></i
-                                    ><span>Blue</span>
-                                </li>
-                                <li>
-                                    <i class="fa fa-square-o" aria-hidden="true"></i
-                                    ><span>Orange</span>
-                                </li>
-                                <li>
-                                    <i class="fa fa-square-o" aria-hidden="true"></i
-                                    ><span>White</span>
-                                </li>
-                                <li>
-                                    <i class="fa fa-square-o" aria-hidden="true"></i
-                                    ><span>Blue</span>
-                                </li>
-                                <li>
-                                    <i class="fa fa-square-o" aria-hidden="true"></i
-                                    ><span>Orange</span>
-                                </li>
-                                <li>
-                                    <i class="fa fa-square-o" aria-hidden="true"></i
-                                    ><span>White</span>
-                                </li>
-                                <li>
-                                    <i class="fa fa-square-o" aria-hidden="true"></i
-                                    ><span>Blue</span>
-                                </li>
-                                <li>
-                                    <i class="fa fa-square-o" aria-hidden="true"></i
-                                    ><span>Orange</span>
-                                </li>
-                            </ul>
-                            <div class="show_more">
-                                <span><span>+</span>Show More</span>
+        <div class="banner container-fluid">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="banner_item align-items-center" style="background-image:url(src/assets/images/banner_1.jpg)">
+                            <div class="banner_category">
+                                <a href="categories.html">women's</a>
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-4">
+                        <div class="banner_item align-items-center" style="background-image:url(src/assets/images/banner_2.jpg)">
+                            <div class="banner_category">
+                                <a href="categories.html">accessories's</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="banner_item align-items-center" style="background-image:url(src/assets/images/banner_3.jpg)">
+                            <div class="banner_category">
+                                <a href="categories.html">men's</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                    <!-- Main Content -->
+        <!-- New Arrivals -->
 
-                    <div class="main_content">
-                        <!-- Products -->
-                        <div class="products_iso">
-                            <div class="row">
-                                <div class="col">
-                                    <!-- Product Sorting -->
-                                    <div
-                                        class="product_sorting_container product_sorting_container_top"
-                                    >
-                                        <ul class="product_sorting">
-                                            <li>
-                                                <span class="type_sorting_text"
-                                                    >Default Sorting</span
-                                                >
-                                                <i class="fa fa-angle-down"></i>
-                                                <ul class="sorting_type">
-                                                    <li class="type_sorting_btn">
-                                                        <span>Default Sorting</span>
-                                                    </li>
-                                                    <li class="type_sorting_btn">
-                                                        <span>Price</span>
-                                                    </li>
-                                                    <li class="type_sorting_btn">
-                                                        <span>Product Name</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <span>Show</span>
-                                                <span class="num_sorting_text">6</span>
-                                                <i class="fa fa-angle-down"></i>
-                                                <ul class="sorting_num">
-                                                    <li class="num_sorting_btn"><span>6</span></li>
-                                                    <li class="num_sorting_btn"><span>12</span></li>
-                                                    <li class="num_sorting_btn"><span>24</span></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                        <div class="pages d-flex flex-row align-items-center">
-                                            <div class="page_current">
-                                                <span>1</span>
-                                                <ul class="page_selection">
-                                                    <li><a href="#">1</a></li>
-                                                    <li><a href="#">2</a></li>
-                                                    <li><a href="#">3</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="page_total"><span>of</span> 3</div>
-                                            <div id="next_page" class="page_next">
-                                                <a href="#"
-                                                    ><i
-                                                        class="fa fa-long-arrow-right"
-                                                        aria-hidden="true"
-                                                    ></i
-                                                ></a>
-                                            </div>
+        <div class="new_arrivals">
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <div class="section_title new_arrivals_title">
+                            <h2>New Arrivals</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col text-center">
+                        <div class="new_arrivals_sorting">
+                            <ul class="arrivals_grid_sorting clearfix button-group filters-button-group">
+                                <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked" data-filter="*">all</li>
+                                <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".women">women's</li>
+                                <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".accessories">accessories</li>
+                                <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".men">men's</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <Swiper
+                            :initial-slide="2"
+                            :modules="[Autoplay, Navigation, Pagination]"
+                            :slides-per-view="4"
+                            :space-between="30"
+                            :autoplay="{ delay: 12000, disableOnInteraction: false }"
+                            :loop="true"
+                            navigation
+                            pagination
+                            class="product_slider"
+                        >
+                            <!-- Slide 1 -->
+                            <SwiperSlide v-for="product in products" :key="product.id" class="product_slider_item">
+                                <div class="product-item">
+                                    <div class="product discount">
+                                        <div class="product_image">
+                                            <img :src="product.image" :alt="product.name">
                                         </div>
-                                    </div>
-
-                                    <!-- Product Grid -->
-
-                                    <div class="product-grid-1 row">
-                                        <!-- Product 1 -->
-                                        <div class="product-item men col">
-                                            <div class="product discount product_filter col">
-                                                <div class="product_image">
-                                                    <img :src="product_1" alt="" />
-                                                </div>
-                                                <div class="favorite favorite_left"></div>
-                                                <div
-                                                    class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"
-                                                >
-                                                    <span>-$20</span>
-                                                </div>
-                                                <div class="product_info">
-                                                    <h6 class="product_name">
-                                                        <a href="single.html"
-                                                            >Fujifilm X100T 16 MP Digital Camera
-                                                            (Silver)</a
-                                                        >
-                                                    </h6>
-                                                    <div class="product_price">
-                                                        $520.00<span>$590.00</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="red_button add_to_cart_button">
-                                                <a href="#">add to cart</a>
-                                            </div>
+                                        <div class="favorite favorite_left"></div>
+                                        <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center">
+                                            <span>{{ product.discount }}</span>
                                         </div>
-
-                                        <!-- Product 2 -->
-
-                                        <div class="product-item women col">
-                                            <div class="product product_filter">
-                                                <div class="product_image">
-                                                    <img :src="product_2" alt="" />
-                                                </div>
-                                                <div class="favorite"></div>
-                                                <div
-                                                    class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"
-                                                >
-                                                    <span>new</span>
-                                                </div>
-                                                <div class="product_info">
-                                                    <h6 class="product_name">
-                                                        <a href="single.html"
-                                                            >Samsung CF591 Series Curved 27-Inch FHD
-                                                            Monitor</a
-                                                        >
-                                                    </h6>
-                                                    <div class="product_price">$610.00</div>
-                                                </div>
-                                            </div>
-                                            <div class="red_button add_to_cart_button">
-                                                <a href="#">add to cart</a>
-                                            </div>
-                                        </div>
-
-                                        <!-- Product 3 -->
-
-                                        <div class="product-item women col">
-                                            <div class="product product_filter">
-                                                <div class="product_image">
-                                                    <img :src="product_3" alt="" />
-                                                </div>
-                                                <div class="favorite"></div>
-                                                <div class="product_info">
-                                                    <h6 class="product_name">
-                                                        <a href="single.html"
-                                                            >Blue Yeti USB Microphone Blackout
-                                                            Edition</a
-                                                        >
-                                                    </h6>
-                                                    <div class="product_price">$120.00</div>
-                                                </div>
-                                            </div>
-                                            <div class="red_button add_to_cart_button">
-                                                <a href="#">add to cart</a>
-                                            </div>
-                                        </div>
-
-                                        <!-- Product 4 -->
-
-                                        <div class="product-item accessories col">
-                                            <div class="product product_filter">
-                                                <div class="product_image">
-                                                    <img :src="product_4" alt="" />
-                                                </div>
-                                                <div
-                                                    class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"
-                                                >
-                                                    <span>sale</span>
-                                                </div>
-                                                <div class="favorite favorite_left"></div>
-                                                <div class="product_info">
-                                                    <h6 class="product_name">
-                                                        <a href="single.html"
-                                                            >DYMO LabelWriter 450 Turbo Thermal
-                                                            Label Printer</a
-                                                        >
-                                                    </h6>
-                                                    <div class="product_price">$410.00</div>
-                                                </div>
-                                            </div>
-                                            <div class="red_button add_to_cart_button">
-                                                <a href="#">add to cart</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-grid-2 row">
-                                        <!-- Product 5 -->
-                                        <div class="product-item women men col">
-                                            <div class="product product_filter">
-                                                <div class="product_image">
-                                                    <img :src="product_5" alt="" />
-                                                </div>
-                                                <div class="favorite"></div>
-                                                <div class="product_info">
-                                                    <h6 class="product_name">
-                                                        <a href="single.html"
-                                                            >Pryma Headphones, Rose Gold & Grey</a
-                                                        >
-                                                    </h6>
-                                                    <div class="product_price">$180.00</div>
-                                                </div>
-                                            </div>
-                                            <div class="red_button add_to_cart_button">
-                                                <a href="#">add to cart</a>
-                                            </div>
-                                        </div>
-
-                                        <!-- Product 6 -->
-
-                                        <div class="product-item accessories col">
-                                            <div class="product discount product_filter">
-                                                <div class="product_image">
-                                                    <img :src="product_6" alt="" />
-                                                </div>
-                                                <div class="favorite favorite_left"></div>
-                                                <div
-                                                    class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"
-                                                >
-                                                    <span>-$20</span>
-                                                </div>
-                                                <div class="product_info">
-                                                    <h6 class="product_name">
-                                                        <a href="single.html"
-                                                            >Fujifilm X100T 16 MP Digital Camera
-                                                            (Silver)</a
-                                                        >
-                                                    </h6>
-                                                    <div class="product_price">
-                                                        $520.00<span>$590.00</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="red_button add_to_cart_button">
-                                                <a href="#">add to cart</a>
-                                            </div>
-                                        </div>
-
-                                        <!-- Product 7 -->
-
-                                        <div class="product-item women col">
-                                            <div class="product product_filter">
-                                                <div class="product_image">
-                                                    <img :src="product_7" alt="" />
-                                                </div>
-                                                <div class="favorite"></div>
-                                                <div class="product_info">
-                                                    <h6 class="product_name">
-                                                        <a href="single.html"
-                                                            >Samsung CF591 Series Curved 27-Inch FHD
-                                                            Monitor</a
-                                                        >
-                                                    </h6>
-                                                    <div class="product_price">$610.00</div>
-                                                </div>
-                                            </div>
-                                            <div class="red_button add_to_cart_button">
-                                                <a href="#">add to cart</a>
-                                            </div>
-                                        </div>
-
-                                        <!-- Product 8 -->
-
-                                        <div class="product-item accessories col">
-                                            <div class="product product_filter">
-                                                <div class="product_image">
-                                                    <img :src="product_8" alt="" />
-                                                </div>
-                                                <div class="favorite"></div>
-                                                <div class="product_info">
-                                                    <h6 class="product_name">
-                                                        <a href="single.html"
-                                                            >Blue Yeti USB Microphone Blackout
-                                                            Edition</a
-                                                        >
-                                                    </h6>
-                                                    <div class="product_price">$120.00</div>
-                                                </div>
-                                            </div>
-                                            <div class="red_button add_to_cart_button">
-                                                <a href="#">add to cart</a>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="product-grid-2 row">
-                                        <!-- Product 9 -->
-
-                                        <div class="product-item men col">
-                                            <div class="product product_filter">
-                                                <div class="product_image">
-                                                    <img :src="product_9" alt="" />
-                                                </div>
-                                                <div
-                                                    class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"
-                                                >
-                                                    <span>sale</span>
-                                                </div>
-                                                <div class="favorite favorite_left"></div>
-                                                <div class="product_info">
-                                                    <h6 class="product_name">
-                                                        <a href="single.html"
-                                                            >DYMO LabelWriter 450 Turbo Thermal
-                                                            Label Printer</a
-                                                        >
-                                                    </h6>
-                                                    <div class="product_price">$410.00</div>
-                                                </div>
-                                            </div>
-                                            <div class="red_button add_to_cart_button">
-                                                <a href="#">add to cart</a>
-                                            </div>
-                                        </div>
-
-                                        <!-- Product 10 -->
-
-                                        <div class="product-item men col">
-                                            <div class="product product_filter">
-                                                <div class="product_image">
-                                                    <img :src="product_10" alt="" />
-                                                </div>
-                                                <div class="favorite"></div>
-                                                <div class="product_info">
-                                                    <h6 class="product_name">
-                                                        <a href="single.html"
-                                                            >Pryma Headphones, Rose Gold & Grey</a
-                                                        >
-                                                    </h6>
-                                                    <div class="product_price">$180.00</div>
-                                                </div>
-                                            </div>
-                                            <div class="red_button add_to_cart_button">
-                                                <a href="#">add to cart</a>
-                                            </div>
-                                        </div>
-
-                                        <!-- Product 11 -->
-
-                                        <div class="product-item women men col">
-                                            <div class="product product_filter">
-                                                <div class="product_image">
-                                                    <img :src="product_5" alt="" />
-                                                </div>
-                                                <div class="favorite"></div>
-                                                <div class="product_info">
-                                                    <h6 class="product_name">
-                                                        <a href="single.html"
-                                                            >Pryma Headphones, Rose Gold & Grey</a
-                                                        >
-                                                    </h6>
-                                                    <div class="product_price">$180.00</div>
-                                                </div>
-                                            </div>
-                                            <div class="red_button add_to_cart_button">
-                                                <a href="#">add to cart</a>
-                                            </div>
-                                        </div>
-
-                                        <!-- Product 12 -->
-
-                                        <div class="product-item accessories col">
-                                            <div class="product discount product_filter">
-                                                <div class="product_image">
-                                                    <img :src="product_6" alt="" />
-                                                </div>
-                                                <div class="favorite favorite_left"></div>
-                                                <div
-                                                    class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"
-                                                >
-                                                    <span>-$20</span>
-                                                </div>
-                                                <div class="product_info">
-                                                    <h6 class="product_name">
-                                                        <a href="single.html"
-                                                            >Fujifilm X100T 16 MP Digital Camera
-                                                            (Silver)</a
-                                                        >
-                                                    </h6>
-                                                    <div class="product_price">
-                                                        $520.00<span>$590.00</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="red_button add_to_cart_button">
-                                                <a href="#">add to cart</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Product Sorting -->
-
-                                    <div
-                                        class="product_sorting_container product_sorting_container_bottom clearfix"
-                                    >
-                                        <ul class="product_sorting">
-                                            <li>
-                                                <span>Show:</span>
-                                                <span class="num_sorting_text">04</span>
-                                                <i class="fa fa-angle-down"></i>
-                                                <ul class="sorting_num">
-                                                    <li class="num_sorting_btn"><span>01</span></li>
-                                                    <li class="num_sorting_btn"><span>02</span></li>
-                                                    <li class="num_sorting_btn"><span>03</span></li>
-                                                    <li class="num_sorting_btn"><span>04</span></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                        <span class="showing_results"
-                                            >Showing 1–3 of 12 results</span
-                                        >
-                                        <div class="pages d-flex flex-row align-items-center">
-                                            <div class="page_current">
-                                                <span>1</span>
-                                                <ul class="page_selection">
-                                                    <li><a href="#">1</a></li>
-                                                    <li><a href="#">2</a></li>
-                                                    <li><a href="#">3</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="page_total"><span>of</span> 3</div>
-                                            <div id="next_page_1" class="page_next">
-                                                <a href="#"
-                                                    ><i
-                                                        class="fa fa-long-arrow-right"
-                                                        aria-hidden="true"
-                                                    ></i
-                                                ></a>
-                                            </div>
+                                        <div class="product_info">
+                                            <h6 class="product_name">
+                                                <a href="single.html">{{ product.name }}</a>
+                                            </h6>
+                                            <div class="product_price">{{ product.price }}<span>{{ product.oldPrice }}</span></div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </SwiperSlide>
+                            <!-- ... (other slides) -->
+                        </Swiper>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Deal of the week -->
+
+        <div class="deal_ofthe_week">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <div class="deal_ofthe_week_img">
+                            <img :src="deal_of_the_week" alt="">
                         </div>
+                    </div>
+                    <div class="col-lg-6 text-right deal_ofthe_week_col">
+                        <div class="deal_ofthe_week_content d-flex flex-column align-items-center float-right">
+                            <div class="section_title">
+                                <h2>Deal Of The Week</h2>
+                            </div>
+                            <ul class="timer">
+                                <li class="d-inline-flex flex-column justify-content-center align-items-center">
+                                    <div id="day" class="timer_num">03</div>
+                                    <div class="timer_unit">Day</div>
+                                </li>
+                                <li class="d-inline-flex flex-column justify-content-center align-items-center">
+                                    <div id="hour" class="timer_num">15</div>
+                                    <div class="timer_unit">Hours</div>
+                                </li>
+                                <li class="d-inline-flex flex-column justify-content-center align-items-center">
+                                    <div id="minute" class="timer_num">45</div>
+                                    <div class="timer_unit">Mins</div>
+                                </li>
+                                <li class="d-inline-flex flex-column justify-content-center align-items-center">
+                                    <div id="second" class="timer_num">23</div>
+                                    <div class="timer_unit">Sec</div>
+                                </li>
+                            </ul>
+                            <div class="red_button deal_ofthe_week_button"><a href="#">shop now</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Best Sellers -->
+        <div class="best_sellers">
+            <div class="container">
+                <!-- ... (section title) -->
+                <div class="row">
+                    <div class="col">
+                        <Swiper
+                            :initial-slide="2"
+                            :modules="[Autoplay, Navigation, Pagination]"
+                            :slides-per-view="4"
+                            :space-between="30"
+                            :autoplay="{ delay: 12000, disableOnInteraction: false }"
+                            :loop="true"
+                            navigation
+                            pagination
+                            class="product_slider"
+                        >
+                            <!-- Slide 1 -->
+                            <SwiperSlide v-for="product in products" :key="product.id" class="product_slider_item">
+                                <div class="product-item">
+                                    <div class="product discount">
+                                        <div class="product_image">
+                                            <img :src="product.image" :alt="product.name">
+                                        </div>
+                                        <div class="favorite favorite_left"></div>
+                                        <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center">
+                                            <span>{{ product.discount }}</span>
+                                        </div>
+                                        <div class="product_info">
+                                            <h6 class="product_name">
+                                                <a href="single.html">{{ product.name }}</a>
+                                            </h6>
+                                            <div class="product_price">{{ product.price }}<span>{{ product.oldPrice }}</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </SwiperSlide>
+                            <!-- ... (other slides) -->
+                        </Swiper>
                     </div>
                 </div>
             </div>
@@ -780,9 +333,7 @@ import single_3_thumb from '@/assets/images/single_3_thumb.jpg'
                 <div class="row benefit_row">
                     <div class="col-lg-3 benefit_col">
                         <div class="benefit_item d-flex flex-row align-items-center">
-                            <div class="benefit_icon">
-                                <i class="fa fa-truck" aria-hidden="true"></i>
-                            </div>
+                            <div class="benefit_icon"><i class="fa fa-truck" aria-hidden="true"></i></div>
                             <div class="benefit_content">
                                 <h6>free shipping</h6>
                                 <p>Suffered Alteration in Some Form</p>
@@ -791,9 +342,7 @@ import single_3_thumb from '@/assets/images/single_3_thumb.jpg'
                     </div>
                     <div class="col-lg-3 benefit_col">
                         <div class="benefit_item d-flex flex-row align-items-center">
-                            <div class="benefit_icon">
-                                <i class="fa fa-money" aria-hidden="true"></i>
-                            </div>
+                            <div class="benefit_icon"><i class="fa fa-money" aria-hidden="true"></i></div>
                             <div class="benefit_content">
                                 <h6>cach on delivery</h6>
                                 <p>The Internet Tend To Repeat</p>
@@ -802,9 +351,7 @@ import single_3_thumb from '@/assets/images/single_3_thumb.jpg'
                     </div>
                     <div class="col-lg-3 benefit_col">
                         <div class="benefit_item d-flex flex-row align-items-center">
-                            <div class="benefit_icon">
-                                <i class="fa fa-undo" aria-hidden="true"></i>
-                            </div>
+                            <div class="benefit_icon"><i class="fa fa-undo" aria-hidden="true"></i></div>
                             <div class="benefit_content">
                                 <h6>45 days return</h6>
                                 <p>Making it Look Like Readable</p>
@@ -813,12 +360,56 @@ import single_3_thumb from '@/assets/images/single_3_thumb.jpg'
                     </div>
                     <div class="col-lg-3 benefit_col">
                         <div class="benefit_item d-flex flex-row align-items-center">
-                            <div class="benefit_icon">
-                                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                            </div>
+                            <div class="benefit_icon"><i class="fa fa-clock-o" aria-hidden="true"></i></div>
                             <div class="benefit_content">
                                 <h6>opening all week</h6>
                                 <p>8AM - 09PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blogs -->
+
+        <div class="blogs">
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <div class="section_title">
+                            <h2>Latest Blogs</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row blogs_container">
+                    <div class="col-lg-4 blog_item_col">
+                        <div class="blog_item">
+                            <div class="blog_background" style="background-image:url(src/assets/images/blog_1.jpg)"></div>
+                            <div class="blog_content d-flex flex-column align-items-center justify-content-center text-center">
+                                <h4 class="blog_title">Here are the trends I see coming this fall</h4>
+                                <span class="blog_meta">by admin | dec 01, 2017</span>
+                                <a class="blog_more" href="#">Read more</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 blog_item_col">
+                        <div class="blog_item">
+                            <div class="blog_background" style="background-image:url(src/assets/images/blog_2.jpg)"></div>
+                            <div class="blog_content d-flex flex-column align-items-center justify-content-center text-center">
+                                <h4 class="blog_title">Here are the trends I see coming this fall</h4>
+                                <span class="blog_meta">by admin | dec 01, 2017</span>
+                                <a class="blog_more" href="#">Read more</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 blog_item_col">
+                        <div class="blog_item">
+                            <div class="blog_background" style="background-image:url(src/assets/images/blog_3.jpg)"></div>
+                            <div class="blog_content d-flex flex-column align-items-center justify-content-center text-center">
+                                <h4 class="blog_title">Here are the trends I see coming this fall</h4>
+                                <span class="blog_meta">by admin | dec 01, 2017</span>
+                                <a class="blog_more" href="#">Read more</a>
                             </div>
                         </div>
                     </div>
@@ -832,33 +423,18 @@ import single_3_thumb from '@/assets/images/single_3_thumb.jpg'
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6">
-                        <div
-                            class="newsletter_text d-flex flex-column justify-content-center align-items-lg-start align-items-md-center text-center"
-                        >
+                        <div class="newsletter_text d-flex flex-column justify-content-center align-items-lg-start align-items-md-center text-center">
                             <h4>Newsletter</h4>
                             <p>Subscribe to our newsletter and get 20% off your first purchase</p>
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <div
-                            class="newsletter_form d-flex flex-md-row flex-column flex-xs-column align-items-center justify-content-lg-end justify-content-center"
-                        >
-                            <input
-                                id="newsletter_email"
-                                type="email"
-                                placeholder="Your email"
-                                required="required"
-                                data-error="Valid email is required."
-                            />
-                            <button
-                                id="newsletter_submit"
-                                type="submit"
-                                class="newsletter_submit_btn trans_300"
-                                value="Submit"
-                            >
-                                subscribe
-                            </button>
-                        </div>
+                        <form action="post">
+                            <div class="newsletter_form d-flex flex-md-row flex-column flex-xs-column align-items-center justify-content-lg-end justify-content-center">
+                                <input id="newsletter_email" type="email" placeholder="Your email" required="required" data-error="Valid email is required.">
+                                <button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300" value="Submit">subscribe</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -870,9 +446,7 @@ import single_3_thumb from '@/assets/images/single_3_thumb.jpg'
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6">
-                        <div
-                            class="footer_nav_container d-flex flex-sm-row flex-column align-items-center justify-content-lg-start justify-content-center text-center"
-                        >
+                        <div class="footer_nav_container d-flex flex-sm-row flex-column align-items-center justify-content-lg-start justify-content-center text-center">
                             <ul class="footer_nav">
                                 <li><a href="#">Blog</a></li>
                                 <li><a href="#">FAQs</a></li>
@@ -881,31 +455,13 @@ import single_3_thumb from '@/assets/images/single_3_thumb.jpg'
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <div
-                            class="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center"
-                        >
+                        <div class="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
                             <ul>
-                                <li>
-                                    <a href="#"
-                                        ><i class="fa fa-facebook" aria-hidden="true"></i
-                                    ></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        ><i class="fa fa-instagram" aria-hidden="true"></i
-                                    ></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        ><i class="fa fa-pinterest" aria-hidden="true"></i
-                                    ></a>
-                                </li>
+                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -913,19 +469,62 @@ import single_3_thumb from '@/assets/images/single_3_thumb.jpg'
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="footer_nav_container">
-                            <div class="cr">
-                                ©2018 All Rights Reserverd. Template by
-                                <a href="#">Colorlib</a> &amp; distributed by
-                                <a href="https://themewagon.com">ThemeWagon</a>
-                            </div>
+                            <div class="cr">©2018 All Rights Reserverd. Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="#">Colorlib</a> &amp; distributed by <a href="https://themewagon.com">ThemeWagon</a></div>
                         </div>
                     </div>
                 </div>
             </div>
         </footer>
+
     </div>
 </template>
 
-<style scoped></style>
-<style src="/src/assets/styles/categories_responsive.css"></style>
-<style src="/src/assets/styles/categories_styles.css"></style>
+<style scoped>
+.logo {
+    max-height: 50px;
+}
+.nav-item .nav-link {
+    margin-right: 20px;
+}
+/* fs_menu_overlay */
+.fs_menu_overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 998;
+}
+
+/* hamburger_menu */
+.hamburger_menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    background: #fff;
+    z-index: 999;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Hiển thị menu khi có class mở */
+.hamburger_menu_open {
+    transform: translateX(0);
+}
+
+/* hamburger_close */
+.hamburger_close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+
+</style>
+<style src="/src/assets/styles/responsive.css"></style>
+<style src="/src/assets/styles/main_styles.css"></style>
+

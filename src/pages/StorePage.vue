@@ -47,9 +47,20 @@ const products = ref([
     { id: 8, image: product_8, name: 'Product 5 Name', price: '$150.00', oldPrice: '$200.00', discount: '-$50' },
     { id: 9, image: product_9, name: 'Product 5 Name', price: '$150.00', oldPrice: '$200.00', discount: '-$50' },
     { id: 10, image: product_10, name: 'Product 5 Name', price: '$150.00', oldPrice: '$200.00', discount: '-$50' },
-
-
 ]);
+
+// Biến trạng thái để kiểm soát hamburger menu
+const isHamburgerMenuOpen = ref(false);
+
+// Hàm mở hamburger menu
+const openHamburgerMenu = () => {
+    isHamburgerMenuOpen.value = true;
+};
+
+// Hàm đóng hamburger menu
+const closeHamburgerMenu = () => {
+    isHamburgerMenuOpen.value = false;
+};
 
 </script>
 
@@ -83,7 +94,8 @@ const products = ref([
                                         </a>
                                     </li>
                                 </ul>
-                                <div class="hamburger_container">
+                                <!-- Thêm @click để mở hamburger menu -->
+                                <div class="hamburger_container" @click="openHamburgerMenu">
                                     <i class="fa fa-bars" aria-hidden="true"></i>
                                 </div>
                             </nav>
@@ -92,9 +104,12 @@ const products = ref([
                 </div>
             </div>
         </header>
-        <div class="fs_menu_overlay" v-if="isHamburgerMenuOpen" @click="isHamburgerMenuOpen = false"></div>
-        <div class="hamburger_menu">
-            <div class="hamburger_close"><i class="fa fa-times" aria-hidden="true"></i></div>
+
+        <!-- Hamburger -->
+        <!-- Overlay để đóng menu khi nhấp vào ngoài -->
+        <div class="fs_menu_overlay" v-if="isHamburgerMenuOpen" @click="closeHamburgerMenu"></div>
+        <div class="hamburger_menu" :class="{ 'hamburger_menu_open': isHamburgerMenuOpen }">
+            <div class="hamburger_close" @click="closeHamburgerMenu"><i class="fa fa-times" aria-hidden="true"></i></div>
             <div class="hamburger_menu_content text-right">
                 <ul class="menu_top_nav">
                     <li class="menu_item has-children">
@@ -470,6 +485,46 @@ const products = ref([
 .nav-item .nav-link {
     margin-right: 20px;
 }
+
+/* fs_menu_overlay */
+.fs_menu_overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 998;
+}
+
+/* hamburger_menu */
+.hamburger_menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    background: #fff;
+    z-index: 999;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Hiển thị menu khi có class mở */
+.hamburger_menu_open {
+    transform: translateX(0);
+}
+
+/* hamburger_close */
+.hamburger_close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+
+
 
 </style>
 <style src="/src/assets/styles/responsive.css"></style>

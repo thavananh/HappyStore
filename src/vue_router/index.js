@@ -13,7 +13,7 @@ import ThuNghiem from '@/components/GiaoDienThuNghiem/ThuNghiem.vue'
 
 const routes = [
     {
-        path: '/',
+        path: '/home',
         name: 'Home',
         component: StorePage,
     },
