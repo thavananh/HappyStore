@@ -214,7 +214,7 @@ import single_3_thumb from '@/assets/images/single_3_thumb.jpg'
                             </div>
                             <div class="col-lg-9 image_col order-lg-2 order-1">
                                 <div class="single_product_image">
-                                    <div class="single_product_image_background" style="background-image:url(/src/assets/images/single_2.jpg)"></div>
+                                    <img class="single_product_image_background" style="background-image:url(/src/assets/images/single_2.jpg)" src=""/>
                                 </div>
                             </div>
                         </div>

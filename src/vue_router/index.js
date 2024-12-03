@@ -10,6 +10,7 @@ import ProductDetails from '@/pages/ProductDetails.vue'
 import OverView_Dashboard from '@/layouts/OverView_Dashboard.vue'
 import Product_Dashboard from '@/layouts/Product_Dashboard.vue'
 import ThuNghiem from '@/components/GiaoDienThuNghiem/ThuNghiem.vue'
+import CustomerDashboard from '@/pages/CustomerDashboard.vue'
 
 const routes = [
     {
@@ -56,6 +57,11 @@ const routes = [
                 path: '/product_dashboard',
                 name: 'Product_Dashboard',
                 component: Product_Dashboard,
+            },
+            {
+                path: '/customer_dashboard',
+                name: 'CustomerDashboard',
+                component: CustomerDashboard,
             }
         ]
     },
