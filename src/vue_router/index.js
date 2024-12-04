@@ -11,17 +11,24 @@ import OverView_Dashboard from '@/layouts/OverView_Dashboard.vue'
 import Product_Dashboard from '@/layouts/Product_Dashboard.vue'
 import ThuNghiem from '@/components/GiaoDienThuNghiem/ThuNghiem.vue'
 import CustomerDashboard from '@/pages/CustomerDashboard.vue'
+import MainPage from '@/pages/MainPage.vue'
 
 const routes = [
     {
-        path: '/home',
-        name: 'Home',
-        component: StorePage,
-    },
-    {
-        path: '/shop',
-        name: 'Shop',
-        component: ShopPage,
+        path: '/',
+        component: MainPage,
+        children: [
+            {
+                path: '',
+                name: 'Home',
+                component: StorePage
+            },
+            {
+                path: '/shop',
+                name: 'Shop',
+                component: ShopPage,
+            }
+        ]
     },
     {
         path: '/product_details',
