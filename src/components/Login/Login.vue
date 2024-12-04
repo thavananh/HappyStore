@@ -121,6 +121,8 @@ async function submitLogin(event) {
         </form>
 
         <!-- Modal -->
+<!--        Use this method because of bootstrap problem. When importing bootstrap in two different place (the main.js and Login.Vue) -->
+<!--        cause the compiler panic and can't use the dropdown menu  -->
         <div
             class="modal fade"
             :class="{ show: showModal }"
