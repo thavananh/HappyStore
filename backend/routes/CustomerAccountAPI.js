@@ -83,13 +83,13 @@ router.get('/api/customer_account/status', (req, res) => {
     }
 })
 
-router.get('/api/customer_account/info', (req, res) => {
-    if (req.user) {
-
-    }
-    else {
-        return res.sendStatus(401)
-    }
-})
+// router.get('/api/customer_account/info', (req, res) => {
+//     if (req.user) {
+//
+//     }
+//     else {
+//         return res.sendStatus(401)
+//     }
+// })
 
 export default router

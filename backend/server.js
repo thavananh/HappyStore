@@ -11,6 +11,7 @@ import Database from './database.js'
 import { syncAll } from './ultis/syncAll.js'
 import customerAccountAPI from './routes/CustomerAccountAPI.js'
 import connectSessionSequelize from 'connect-session-sequelize';
+import CustomerAPI from './routes/CustomerAPI.js'
 
 // Initialize the Express app
 const app = express()
@@ -68,6 +69,7 @@ app.use(bodyParser.json())
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(customerAccountAPI)
+app.use(CustomerAPI)
 
 // Middleware setup
 

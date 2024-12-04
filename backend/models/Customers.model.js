@@ -96,7 +96,7 @@ class CustomersModel {
      */
     async searchCustomer(criteria) {
         try {
-            const customers = await this.customer.findAll({
+            const customers = await this.customer.findOne({
                 where: { ...criteria }
             });
             return customers;
