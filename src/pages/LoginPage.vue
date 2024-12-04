@@ -1,8 +1,5 @@
 <script setup>
     import LoginPic1 from '@/assets/images/login/login_pic1.svg';
-    import GoogleLogo from '@/assets/images/logo/Google__G__logo.svg'
-    import Login from '@/components/Login/Login.vue'
-    import Registration from '@/components/Login/Registration.vue'
 </script>
 
 <template>

@@ -1,12 +1,9 @@
 <script setup>
 
-import UserProfileOverview from '@/components/Dashboard/UserProfileOverview.vue'
+
 import SidebarMenu from '@/components/Sidebar/SidebarMenu.vue'
 import TopNavBar from '@/components/Navbar/TopNavBar.vue'
-import ValuableCustomersList from '@/components/Dashboard/ValuableCustomersList.vue'
-import SalesOverviewChart from '@/components/Dashboard/SalesOverviewChart.vue'
-import TotalSalesChart from '@/components/Dashboard/TotalSalesChart.vue'
-import TopSellingProducts from '@/components/Dashboard/TopSellingProducts.vue'
+
 </script>
 
 <template>

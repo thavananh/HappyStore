@@ -1,24 +1,8 @@
 <script setup>
-import LogoHappyStore from '@/assets/images/logo/LogoHappyStore_NenTrang.png'
 import { ref } from 'vue'
-import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Autoplay, Navigation, Pagination } from 'swiper/modules'
-
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-
-
-import product_1 from '@/assets/images/product_1.png'
-import product_2 from '@/assets/images/product_2.png'
-import product_3 from '@/assets/images/product_3.png'
-import product_4 from '@/assets/images/product_4.png'
-import product_5 from '@/assets/images/product_5.png'
-import product_6 from '@/assets/images/product_6.png'
-import product_7 from '@/assets/images/product_7.png'
-import product_8 from '@/assets/images/product_8.png'
-import product_9 from '@/assets/images/product_9.png'
-import product_10 from '@/assets/images/product_10.png'
 
 import UserProfileOverview from '@/components/Dashboard/UserProfileOverview.vue'
 
@@ -35,88 +19,6 @@ const closeHamburgerMenu = () => {
     isHamburgerMenuOpen.value = false
 }
 
-const products = ref([
-    {
-        id: 1,
-        image: product_1,
-        name: 'Fujifilm X100T 16 MP Digital Camera (Silver)',
-        price: '$520.00',
-        oldPrice: '$590.00',
-        discount: '-$20',
-    },
-    {
-        id: 2,
-        image: product_2,
-        name: 'Product 2 Name',
-        price: '$430.00',
-        oldPrice: '$500.00',
-        discount: '-$70',
-    },
-    {
-        id: 3,
-        image: product_3,
-        name: 'Product 3 Name',
-        price: '$320.00',
-        oldPrice: '$400.00',
-        discount: '-$80',
-    },
-    {
-        id: 4,
-        image: product_4,
-        name: 'Product 4 Name',
-        price: '$210.00',
-        oldPrice: '$300.00',
-        discount: '-$90',
-    },
-    {
-        id: 5,
-        image: product_5,
-        name: 'Product 5 Name',
-        price: '$150.00',
-        oldPrice: '$200.00',
-        discount: '-$50',
-    },
-    {
-        id: 6,
-        image: product_6,
-        name: 'Product 5 Name',
-        price: '$150.00',
-        oldPrice: '$200.00',
-        discount: '-$50',
-    },
-    {
-        id: 7,
-        image: product_7,
-        name: 'Product 5 Name',
-        price: '$150.00',
-        oldPrice: '$200.00',
-        discount: '-$50',
-    },
-    {
-        id: 8,
-        image: product_8,
-        name: 'Product 5 Name',
-        price: '$150.00',
-        oldPrice: '$200.00',
-        discount: '-$50',
-    },
-    {
-        id: 9,
-        image: product_9,
-        name: 'Product 5 Name',
-        price: '$150.00',
-        oldPrice: '$200.00',
-        discount: '-$50',
-    },
-    {
-        id: 10,
-        image: product_10,
-        name: 'Product 5 Name',
-        price: '$150.00',
-        oldPrice: '$200.00',
-        discount: '-$50',
-    },
-])
 </script>
 
 <template>

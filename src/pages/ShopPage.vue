@@ -1,16 +1,5 @@
 <script setup>
-import slider_1 from '@/assets/images/slider_1.jpg'
-import banner_1 from '@/assets/images/banner_1.jpg'
-import banner_2 from '@/assets/images/banner_2.jpg'
-import banner_3 from '@/assets/images/banner_3.jpg'
-import blog_1 from '@/assets/images/blog_1.jpg'
-import blog_2 from '@/assets/images/blog_2.jpg'
-import blog_3 from '@/assets/images/blog_3.jpg'
-import deal_of_the_week from '@/assets/images/deal_ofthe_week.png'
-import desc_1 from '@/assets/images/desc_1.jpg'
-import desc_2 from '@/assets/images/desc_1.jpg'
-import desc_3 from '@/assets/images/desc_1.jpg'
-import map_maker from '@/assets/images/map_marker.png'
+
 import product_1 from '@/assets/images/product_1.png'
 import product_2 from '@/assets/images/product_2.png'
 import product_3 from '@/assets/images/product_3.png'
@@ -21,12 +10,7 @@ import product_7 from '@/assets/images/product_7.png'
 import product_8 from '@/assets/images/product_8.png'
 import product_9 from '@/assets/images/product_9.png'
 import product_10 from '@/assets/images/product_10.png'
-import single_1 from '@/assets/images/single_1.jpg'
-import single_1_thumb from '@/assets/images/single_1_thumb.jpg'
-import single_2 from '@/assets/images/single_2.jpg'
-import single_2_thumb from '@/assets/images/single_2_thumb.jpg'
-import single_3 from '@/assets/images/single_3.jpg'
-import single_3_thumb from '@/assets/images/single_3_thumb.jpg'
+
 import { ref } from 'vue'
 
 
