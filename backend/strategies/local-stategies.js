@@ -1,36 +1,54 @@
 import passport from 'passport'
-import {Strategy} from 'passport-local'
-import { getUser } from '../routes/UserAccount.route.js'
+import LocalStrategy from 'passport-local'
 import {comparePassword} from './helper.js'
+import CustomerAccountModel from '../models/CustomerAccount.model.js'
+
+const customerAccountInstance = new CustomerAccountModel()
 
 passport.serializeUser((user, done) => {
     console.log("Inside serializeUser")
-    done(null, user)
+    done(null, user.UserID)
 })
 
-passport.deserializeUser((user, done) => {
+passport.deserializeUser(async(id, done) => {
     console.log("Inside deserializeUser")
+    console.log(`Deserialized UserID: ${id}`)
     try {
         console.log("Deserialize User")
-        if (!user) throw new Error('User not found')
-        done(null, user)
+        const findUser = await customerAccountInstance.searchCustomerAccount({UserID: id})
+        if (!findUser) throw new Error('User not found')
+        done(null, findUser)
     } catch (err) {
-        console.log(`Có lỗi ở DeserializeUser: ${err}`)
-        console.log(`In ra giá trị User ${user}`)
         done(err, null)
     }
 })
 
-export default passport.use(
-    new Strategy(async (username, password, done) => {
+passport.use('local-customer-sign-in', new LocalStrategy(
+    async function (username, password, done) {
+        console.log(`Input Username: ${ username }`)
+        console.log(`Input Password: ${ password }`)
         try {
-            const findUser = await getUser(username)
-            console.log(findUser)
+            const findUser = await customerAccountInstance.searchCustomerAccount({Username: username})
             if (!findUser) throw new Error('User not found')
-            if (findUser.username !== username || comparePassword(findUser.password, password)) throw new Error('BAD CREDENTIALS')
+            console.log(`Get User: ${findUser}`)
+            console.log(`Get Username: ${findUser.Username}`)
+            console.log(`Get password: ${findUser.PasswordHash}`)
+            if (!comparePassword(password, findUser.PasswordHash)) {
+                throw new Error('Invalid credentials')
+            }
+            console.log(`Xác thực thành công`)
             done(null, findUser)
-        } catch (err) {
+        }
+        catch (err) {
             done(err, null)
         }
-    })
-)
+    }
+))
+
+passport.use('local-employee', new LocalStrategy(
+    function (username, password, done) {
+
+    }
+))
+
+export default passport

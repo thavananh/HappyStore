@@ -1,11 +1,73 @@
 <script setup>
 import LoginPic1 from '@/assets/images/login/login_pic1.svg'
 import GoogleLogo from '@/assets/images/logo/Google__G__logo.svg'
+import { reactive, ref } from 'vue'
+import { Modal } from 'bootstrap'
+import {useRouter} from 'vue-router'
+
+const accountData = reactive({
+    Username: '',
+    Password: '',
+})
+
+const errors = reactive({
+    Username: '',
+    Password: '',
+})
+const modalRef = ref(null) // Tham chiếu đến modal
+const modalMessage = ref("Login failed. Please check your username and password and try again.")
+const modalTitle = ref("Login Failed")
+
+function validateSubmit() {
+    let isValid = true
+    if (!accountData.Username) {
+        isValid = false
+        errors.Username = 'Username is required'
+    }
+    if (!accountData.Password) {
+        isValid = false
+        errors.Password = 'Password is required'
+    }
+    return isValid
+}
+
+import axios from 'axios'
+
+axios.defaults.withCredentials = true // Đặt mặc định cho tất cả các request
+
+const router = useRouter()
+
+async function submitLogin(event) {
+    event.preventDefault()
+    if (validateSubmit()) {
+        try {
+            const response = await axios.post('http://localhost:3000/api/customer_account/auth', {
+                username: accountData.Username,
+                password: accountData.Password,
+            })
+            if (response.status === 200) {
+                modalTitle.value = "Login successful"
+                modalMessage.value = "Login successful. Welcome back!"
+                const modalInstance = new Modal(modalRef.value)
+                modalInstance.show()
+                await router.push('/customer_dashboard')
+            }
+
+        }
+        catch (error) {
+            const modalInstance = new Modal(modalRef.value)
+            modalInstance.show()
+            console.log(error)
+        }
+    }
+}
+
+
 </script>
 
 <template>
     <div class="col-lg-8 col-xl-5 offset-xl-1">
-        <form>
+        <form @submit="submitLogin">
             <!-- Email input -->
             <div>
                 <label
@@ -14,8 +76,8 @@ import GoogleLogo from '@/assets/images/logo/Google__G__logo.svg'
                     style="color: black; font-weight: bold"
                     >User name</label
                 >
-                <input type="text" class="form-control" id="Username" required />
-                <div class="invalid-feedback">This field is required.</div>
+                <input type="text" class="form-control" id="Username" v-model="accountData.Username"  />
+                <div class="text-danger" v-if="errors.Username">{{ errors.Username }}</div>
             </div>
             <div class="mb-4">
                 <label
@@ -24,8 +86,8 @@ import GoogleLogo from '@/assets/images/logo/Google__G__logo.svg'
                     style="color: black; font-weight: bold"
                     >Password</label
                 >
-                <input type="password" class="form-control" id="inputPassword" required />
-                <div class="invalid-feedback">This field is required.</div>
+                <input type="password" class="form-control" id="inputPassword" v-model="accountData.Password"  />
+                <div class="text-danger" v-if="errors.Password">{{ errors.Password }}</div>
             </div>
 
             <!-- Submit button -->
@@ -60,6 +122,25 @@ import GoogleLogo from '@/assets/images/logo/Google__G__logo.svg'
                 </a>
             </div>
         </form>
+        <!-- Modal -->
+
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" ref="modalRef">
+            <div class="modal-dialog  modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">{{modalTitle}}</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{modalMessage}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="bg-primary btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 

@@ -1,11 +1,10 @@
-
-import { DataTypes } from 'sequelize'
-import Database from '../database.js'
+import { DataTypes } from 'sequelize';
+import Database from '../database.js';
 
 class CustomersModel {
-    constructor () {
-        const db = new Database()
-        this.sequelize = db.getSequelize()
+    constructor() {
+        const db = new Database();
+        this.sequelize = db.getSequelize();
         this.customer = this.sequelize.define('Customers', {
             CustomerID: {
                 type: DataTypes.STRING(36),
@@ -37,28 +36,92 @@ class CustomersModel {
                 defaultValue: 'Regular',
                 allowNull: true
             },
-        },{
+        }, {
             tableName: 'Customers', // Tên bảng trong cơ sở dữ liệu
             timestamps: true
-        })
+        });
     }
-    getCustomers () {
-        return this.customer
+
+    getCustomers() {
+        return this.customer;
     }
+
+    // Khởi tạo các bảng trong cơ sở dữ liệu
     async init() {
-        await this.sequelize.sync()
+        try {
+            await this.sequelize.sync();
+            console.log('Customers table synced successfully.');
+        } catch (error) {
+            console.error('Error syncing Customers table:', error);
+        }
+    }
+
+    /**
+     * Thêm một khách hàng mới
+     * @param {Object} data - Dữ liệu khách hàng
+     * @returns {Object} Khách hàng vừa được thêm
+     */
+    async addCustomer(data) {
+        try {
+            const newCustomer = await this.customer.create(data);
+            return newCustomer;
+        } catch (error) {
+            console.error('Error adding customer:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Cập nhật thông tin khách hàng
+     * @param {String} customerId - ID của khách hàng cần cập nhật
+     * @param {Object} updates - Dữ liệu cập nhật
+     * @returns {Number} Số bản ghi bị ảnh hưởng
+     */
+    async updateCustomer(customerId, updates) {
+        try {
+            const [updatedRows] = await this.customer.update(updates, {
+                where: { CustomerID: customerId }
+            });
+            return updatedRows;
+        } catch (error) {
+            console.error('Error updating customer:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Tìm kiếm khách hàng theo các tiêu chí
+     * @param {Object} criteria - Tiêu chí tìm kiếm (ví dụ: { FirstName: 'John' })
+     * @returns {Array} Danh sách khách hàng tìm được
+     */
+    async searchCustomer(criteria) {
+        try {
+            const customers = await this.customer.findAll({
+                where: { ...criteria }
+            });
+            return customers;
+        } catch (error) {
+            console.error('Error searching customers:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Xoá khách hàng theo ID
+     * @param {String} customerId - ID của khách hàng cần xoá
+     * @returns {Number} Số bản ghi bị xoá
+     */
+    async deleteCustomer(customerId) {
+        try {
+            const deletedRows = await this.customer.destroy({
+                where: { CustomerID: customerId }
+            });
+            return deletedRows;
+        } catch (error) {
+            console.error('Error deleting customer:', error);
+            throw error;
+        }
     }
 }
 
-export default CustomersModel
-
-
-/*
-    CREATE TABLE Customers (
-        CustomerID VARCHAR(20) PRIMARY KEY,
-        FullName VARCHAR(100) NOT NULL,
-        PhoneNumber VARCHAR(20),
-        Email VARCHAR(100),
-        Address TEXT,
-    );
-*/
+export default CustomersModel;

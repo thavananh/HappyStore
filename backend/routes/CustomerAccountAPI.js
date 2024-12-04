@@ -6,13 +6,18 @@ import CustomerAccountDTO from '../dto/CustomerAccount.dto.js'
 import CustomerDTO from '../dto/Customer.dto.js'
 import CustomersModel from '../models/Customers.model.js'
 import CustomerAccountModel from '../models/CustomerAccount.model.js'
+import '../strategies/local-stategies.js'
+
 
 const router = new Router();
 const customerAccount = new CustomerAccountModel().getCustomerAccount()
 import { v4 as uuidv4 } from 'uuid';
+import passport from 'passport'
 
 const customersModel = new CustomersModel().getCustomers()
 const customerAccountModel = new CustomerAccountModel().getCustomerAccount()
+
+
 
 router.post('/api/customer_account/create', checkSchema(createUserValidationSchema), async (req, res) => {
     const result = validationResult(req)
@@ -64,6 +69,27 @@ router.post('/api/customer_account/create', checkSchema(createUserValidationSche
     }
 })
 
+router.post('/api/customer_account/auth', passport.authenticate('local-customer-sign-in'), (req, res) => {
+    res.sendStatus(200)
+})
 
+router.get('/api/customer_account/status', (req, res) => {
+    if (req.user) {
+        console.log(req.session.id)
+        return res.sendStatus(200)
+    }
+    else {
+        return res.sendStatus(401)
+    }
+})
+
+router.get('/api/customer_account/info', (req, res) => {
+    if (req.user) {
+
+    }
+    else {
+        return res.sendStatus(401)
+    }
+})
 
 export default router

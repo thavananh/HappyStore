@@ -65,12 +65,13 @@ const routes = [
                 name: 'Product_Dashboard',
                 component: Product_Dashboard,
             },
-            {
-                path: '/customer_dashboard',
-                name: 'CustomerDashboard',
-                component: CustomerDashboard,
-            }
+
         ]
+    },
+    {
+        path: '/customer_dashboard',
+        name: 'CustomerDashboard',
+        component: CustomerDashboard,
     },
     {
         path: '/thu_nghiem',

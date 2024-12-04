@@ -1,41 +1,69 @@
 // Import modules using ES module syntax
 import express from 'express'
 import bodyParser from 'body-parser'
-import sequelize from './database.js'
 import cors from 'cors'
 import { cookie } from 'express-validator'
 import cookieParser from 'cookie-parser'
 import session from 'express-session'
 import passport from 'passport'
 import './strategies/local-stategies.js'
-import './ultis/syncAll.js'
 import Database from './database.js'
 import { syncAll } from './ultis/syncAll.js'
 import customerAccountAPI from './routes/CustomerAccountAPI.js'
+import connectSessionSequelize from 'connect-session-sequelize';
 
 // Initialize the Express app
 const app = express()
 
 const db = new Database()
+const sequelize = db.getSequelize()
 db.connect().then(() => {
     console.log('Connected')
     syncAll()
 })
 
+// Initialize SequelizeStore
+const SequelizeStore = connectSessionSequelize(session.Store);
 
+const store = new SequelizeStore({
+    db: sequelize,
+    tableName: 'Sessions', // Optional: specify table name
+});
+
+store.sync()
+    .then(() => {
+        console.log('Session table synchronized successfully.');
+    })
+    .catch((err) => {
+        console.error('Failed to synchronize session table:', err);
+    });
+
+// Middleware setup
 app.use(express.json())
-app.use(cookieParser('hello_world'))
+app.use(cookieParser('06ccd1df-0786-4475-a646-f213253cf563'))
+
 app.use(
     session({
-        secret: 'duycutevl',
+        secret: '7afd85a0-1398-442f-b96d-4479060924f3',
         saveUninitialized: false,
         resave: false,
         cookie: {
-            maxAge: 60000 * 60,
+            maxAge: 60000 * 60, // 1 giờ
+
+            secure: false // Đặt thành true nếu bạn sử dụng HTTPS
         },
-    }),
+        store: new SequelizeStore({
+            db: sequelize, // Pass Sequelize instance
+        })
+    })
 )
-app.use(cors())
+
+// Your other app routes and logic go here
+
+app.use(cors({
+    origin: 'http://localhost:5173', // Thay YOUR_CLIENT_PORT bằng port của front-end
+    credentials: true
+}))
 app.use(bodyParser.json())
 app.use(passport.initialize())
 app.use(passport.session())
@@ -51,62 +79,6 @@ app.get('/', (req, res) => {
     // req.session.visited = true
     res.send('Hello, love to see you')
 })
-
-// app.post('/api/auth', (req, res) => {
-//     const {body:{username, password}} = req
-//     const findUser = mockUsers.find(user => user.username === username)
-//     if (!findUser || findUser.password !== password) {
-//         return res.status(401).send('BAD CREDENTIALS')
-//     }
-//     req.session.user = findUser
-//     return res.status(200).send(findUser)
-// })
-//
-// app.get('/api/auth/status', (req, res) => {
-//     console.log(req.session)
-//     return req.session.user ? res.status(200).send(req.session.user) : res.status(404).send({msg: "Not Authorized"})
-// })
-//
-// app.post('/api/auth/cart', (req, res) => {
-//     if (!req.session.user) return res.status(401).send('BAD CREDENTIALS')
-//     console.log(req.session)
-//     const {body: item} = req
-//     const {cart} = req.session
-//     console.log(cart)
-//     if (cart) {
-//         cart.push(item)
-//     }
-//     else {
-//         req.session.cart = [item]
-//     }
-//     return res.status(201).send(item)
-// })
-//
-// app.get('/api/auth/cart', (req, res) => {
-//     if (!req.session.user) return res.status(401).send('BAD CREDENTIALS');
-//     if (req.session.cart) {return res.status(200).send(req.session.cart)}
-//     else {return res.status(200).send([])}
-// })
-
-// app.post('/api/auth', passport.authenticate('local'), (req, res) => {
-//     console.log("Gọi auth user")
-//     res.sendStatus(200)
-// })
-//
-// app.get('/api/auth/status', (req, res) => {
-//     console.log(`Gọi auth/status endpoint`)
-//     console.log(req.user)
-//     return req.user ? res.status(200).send(req.user) : res.status(401).send('Not authorized')
-// })
-//
-// app.post('/api/auth/logout', (req, res) => {
-//     console.log('Đang ở /api/auth/logout')
-//     if (!req.user) return res.status(401)
-//     req.logout((err) => {
-//         if (err) return res.sendStatus(400)
-//         return res.sendStatus(200)
-//     })
-// })
 
 // Start the server
 const PORT = 3000

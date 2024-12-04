@@ -1,10 +1,10 @@
-import Database from '../database.js'
-import { DataTypes, Model as sequelize } from 'sequelize'
+import Database from '../database.js';
+import { DataTypes } from 'sequelize';
 
 class SuppliersModel {
     constructor () {
-        const db = new Database()
-        this.sequelize = db.getSequelize()
+        const db = new Database();
+        this.sequelize = db.getSequelize();
         this.suppliers = this.sequelize.define('Suppliers', {
             SupplierID: {
                 type: DataTypes.STRING(36),
@@ -36,24 +36,56 @@ class SuppliersModel {
             timestamps: true
         });
     }
+
     getSuppliers () {
-        return this.suppliers
+        return this.suppliers;
     }
+
     async init() {
-        await this.sequelize.sync()
+        await this.sequelize.sync();
+    }
+
+    async addSupplier(data) {
+        try {
+            const newSupplier = await this.suppliers.create(data);
+            return newSupplier;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async updateSupplier(supplierId, updates) {
+        try {
+            const [updatedRows] = await this.suppliers.update(updates, {
+                where: { SupplierID: supplierId }
+            });
+            return updatedRows;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async searchSupplier(criteria) {
+        try {
+            const suppliers = await this.suppliers.findAll({
+                where: { ...criteria }
+            });
+            return suppliers;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async deleteSupplier(supplierId) {
+        try {
+            const deletedRows = await this.suppliers.destroy({
+                where: { SupplierID: supplierId }
+            });
+            return deletedRows;
+        } catch (error) {
+            throw error;
+        }
     }
 }
 
 export default SuppliersModel;
-
-/*
-CREATE TABLE Suppliers (
-    SupplierID VARCHAR(20) PRIMARY KEY,
-    SupplierName VARCHAR(100) NOT NULL,
-    ContactName VARCHAR(100),
-    PhoneNumber VARCHAR(20),
-    Email VARCHAR(100),
-    Address TEXT,
-    CreatedDate DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-* */

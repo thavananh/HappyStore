@@ -1,11 +1,10 @@
-import sequelize from '../database.js'
-import { DataTypes } from 'sequelize'
-import Database from '../database.js'
+import { DataTypes } from 'sequelize';
+import Database from '../database.js';
 
 class PaymentModel {
     constructor () {
-        const db = new Database()
-        this.sequelize = db.getSequelize()
+        const db = new Database();
+        this.sequelize = db.getSequelize();
         this.payment = this.sequelize.define('Payment', {
             PaymentID: {
                 type: DataTypes.STRING(36),
@@ -25,21 +24,56 @@ class PaymentModel {
             timestamps: true
         });
     }
+
     getPayment() {
         return this.payment;
     }
+
     async init() {
-        await this.sequelize.sync()
+        await this.sequelize.sync();
+    }
+
+    async addPayment(data) {
+        try {
+            const newPayment = await this.payment.create(data);
+            return newPayment;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async updatePayment(paymentId, updates) {
+        try {
+            const [updatedRows] = await this.payment.update(updates, {
+                where: { PaymentID: paymentId }
+            });
+            return updatedRows;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async searchPayment(criteria) {
+        try {
+            const payments = await this.payment.findAll({
+                where: { ...criteria }
+            });
+            return payments;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async deletePayment(paymentId) {
+        try {
+            const deletedRows = await this.payment.destroy({
+                where: { PaymentID: paymentId }
+            });
+            return deletedRows;
+        } catch (error) {
+            throw error;
+        }
     }
 }
 
-export default PaymentModel
-
-
-/*
-CREATE TABLE Payment (
-    PaymentID VARCHAR(20) PRIMARY KEY,
-    PaymentMethod VARCHAR(20),
-    Amount DECIMAL(10, 3)
-);
-*/
+export default PaymentModel;
