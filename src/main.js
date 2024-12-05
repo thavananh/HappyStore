@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import {createPinia} from 'pinia'
 import App from './App.vue'
 import router from '@/vue_router/index.js'
 import './assets/js/all.min.js';
@@ -11,9 +12,9 @@ import '@popperjs/core/dist/umd/popper.min.js'
 
 const app =  createApp(App)
 
-// Sử dụng provide để inject axios vào toàn bộ app
-// app.provide('axios', axios);
+const pinia = createPinia()
 
+app.use(pinia)
 app.use(router)
 
 app.mount('#app')

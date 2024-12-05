@@ -1,13 +1,14 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
 import UserProfileOverview from '@/components/Dashboard/UserProfileOverview.vue'
-import { useRoute } from 'vue-router'
+import { useAppState } from '../store/loginCustomerState.js'
 import axios from 'axios'
 import CustomerDTO from '../../backend/dto/Customer.dto.js'
+import convertUnit from '@/utils/convertUnit.js'
 
 // Biến trạng thái để kiểm soát hamburger menu
 const isHamburgerMenuOpen = ref(false)
@@ -22,25 +23,39 @@ const closeHamburgerMenu = () => {
     isHamburgerMenuOpen.value = false
 }
 
-const route = useRoute()
-const needInfo = route.state?.needInfo
+const appState = useAppState() // Sử dụng Pinia store
+
+const isChanging = ref(false)
 
 axios.defaults.withCredentials = true
 
-const customerData = new CustomerDTO()
+let customerData_reactive = reactive({})
 
-if (needInfo) {
+onMounted(async () => {
+    console.log("I'm Here")
     try {
         const response = await axios.get('http://localhost:3000/api/customer/info')
-        if (response.status !== 200) {
-            throw new Error('Bad request')
-        }
+        if (response.status === 200) {
+            const customerDataDTO = new CustomerDTO(response.data)
+            console.log(customerDataDTO.CustomerID)
 
+            // Cập nhật các thuộc tính của customerData_reactive
+            customerData_reactive.CustomerID = customerDataDTO.CustomerID
+            customerData_reactive.FirstName = customerDataDTO.FirstName
+            customerData_reactive.LastName = customerDataDTO.LastName
+            customerData_reactive.Email = customerDataDTO.Email
+            customerData_reactive.PhoneNumber = customerDataDTO.PhoneNumber
+            customerData_reactive.Address = customerDataDTO.Address
+            customerData_reactive.CustomerType = customerDataDTO.CustomerType
+            customerData_reactive.Username = response.data.Username
+            customerData_reactive.createdAt = response.data.createdAt
+        } else {
+            console.error('Error fetching data:', response.status)
+        }
+    } catch (err) {
+        console.error('Request failed', err)
     }
-    catch (err) {
-        console.log(err)
-    }
-}
+})
 
 </script>
 
@@ -172,13 +187,13 @@ if (needInfo) {
             <div class="col">
                 <div class="row">
                     <div class="col-8">
-                        <div class="d-flex flex-column">
+                        <div class="d-flex flex-column information-show-input">
                             <div class="row" style="margin-bottom: 20px">
                                 <div class="col-3">
-                                    <span>User ID</span>
+                                    <span>Customer ID</span>
                                 </div>
                                 <div class="col">
-                                    <span type="text" style="width: 100%">Xin chao</span>
+                                    <span type="text" style="width: 100%">{{customerData_reactive.CustomerID}}</span>
                                 </div>
                             </div>
                             <div class="row" style="margin-bottom: 20px">
@@ -186,7 +201,8 @@ if (needInfo) {
                                     <span>Username</span>
                                 </div>
                                 <div class="col">
-                                    <input type="text" style="width: 100%" />
+                                    <span style="width: 100%" v-if="!isChanging">{{customerData_reactive.Username}}</span>
+                                    <input type="text" :value="customerData_reactive.Username" v-if="isChanging" style="width: 100%"/>
                                 </div>
                             </div>
                             <div class="row" style="margin-bottom: 20px">
@@ -195,15 +211,17 @@ if (needInfo) {
 
                                 </div>
                                 <div class="col">
-                                    <input type="text" style="width: 100%" />
+                                    <span v-if="!isChanging">{{customerData_reactive.FirstName}}</span>
+                                    <input type="text" :value="customerData_reactive.FirstName" v-if="isChanging" style="width: 100%"/>
                                 </div>
                             </div>
                             <div class="row" style="margin-bottom: 20px">
                                 <div class="col-3">
-                                    <span>Last Name</span>
+                                    <span>Last name</span>
                                 </div>
                                 <div class="col">
-                                    <input type="text" style="width: 100%" />
+                                    <span v-if="!isChanging">{{!customerData_reactive.LastName ? 'null' : customerData_reactive.LastName }}</span>
+                                    <input type="text" :value="customerData_reactive.LastName" v-if="isChanging" style="width: 100%"/>
                                 </div>
                             </div>
                             <div class="row" style="margin-bottom: 20px">
@@ -211,18 +229,42 @@ if (needInfo) {
                                     <span>Email</span>
                                 </div>
                                 <div class="col">
-                                    <input type="text" style="width: 100%" />
+                                    <span v-if="!isChanging">{{customerData_reactive.Email}}</span>
+                                    <input type="text" :value="customerData_reactive.Email" v-if="isChanging" style="width: 100%"/>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom: 20px">
+                                <div class="col-3">
+                                    <span>Address</span>
+                                </div>
+                                <div class="col">
+                                    <span v-if="!isChanging">{{!customerData_reactive.Address ? 'null' : customerData_reactive.Address}}</span>
+                                    <input type="text" :value="customerData_reactive.Address" v-if="isChanging" style="width: 100%"/>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom: 20px">
+                                <div class="col-3">
+                                    <span>Phone number</span>
+                                </div>
+                                <div class="col">
+                                    <span v-if="!isChanging">{{!customerData_reactive.PhoneNumber ? 'null': customerData_reactive.PhoneNumber}}</span>
+                                    <input type="text" :value="customerData_reactive.PhoneNumber" v-if="isChanging" style="width: 100%"/>
                                 </div>
                             </div>
                         </div>
                         <div class="row" style="margin-bottom: 20px">
                             <div class="col-3">
-                                <span>Created at</span>
+                                <span>Account created at</span>
                             </div>
                             <div class="col">
-                                <span type="text" style="width: 100%">Monday, March, 2024</span>
+                                <span type="text" style="width: 100%">{{convertUnit.formatDateToText(customerData_reactive.createdAt)}}</span>
                             </div>
                         </div>
+                        <div class="d-flex flex-row justify-content-between">
+                            <button @click="isChanging = !isChanging" type="button" class="btn btn-primary">Change information</button>
+                            <button type="button" class="btn btn-success" v-if="isChanging">Save changes</button>
+                        </div>
+
                     </div>
                     <div class="col-4">
                         <UserProfileOverview/>
@@ -302,7 +344,6 @@ if (needInfo) {
 .nav-item span {
     font-size: 16px;
 }
-
 
 </style>
 <style src="/src/assets/styles/responsive.css"></style>

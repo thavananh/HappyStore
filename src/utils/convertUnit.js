@@ -1,6 +1,6 @@
 class ConvertUnit {
     constructor() {}
-    formatDateToText(dateString) {
+    static formatDateToText(dateString) {
         // Convert string to Date object
         const date = new Date(dateString);
 

@@ -50,7 +50,6 @@ app.use(
         resave: false,
         cookie: {
             maxAge: 60000 * 60, // 1 giờ
-
             secure: false // Đặt thành true nếu bạn sử dụng HTTPS
         },
         store: new SequelizeStore({

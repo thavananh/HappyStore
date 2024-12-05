@@ -2,7 +2,7 @@
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
-
+import { useAppState } from '/src/store/loginCustomerState.js'
 import LoginPic1 from '@/assets/images/login/login_pic1.svg'
 import GoogleLogo from '@/assets/images/logo/Google__G__logo.svg'
 
@@ -56,13 +56,14 @@ async function submitLogin(event) {
                 modalMessage.value = "Login successful. Welcome back!"
                 showModal.value = true
 
+                const appState = useAppState(); // Sử dụng store Pinia
+
                 // Wait a bit before navigating
                 setTimeout(() => {
-                    router.push({
-                        path: '/customer_dashboard',
-                        state: { needInfo: true },
-                    })
-                }, 1500)
+                    appState.setUsername(accountData.Username); // Cập nhật trạng thái trong store
+                    router.push('/customer_dashboard'); // Chuyển hướng đến dashboard
+                }, 1500);
+
             } else {
                 modalTitle.value = "Login Failed"
                 modalMessage.value = "Unexpected response from the server."

@@ -8,16 +8,22 @@ const customersModel = new CustomersModel()
 router.get('/api/customer/info', async (req, res) => {
     if (req.user) {
         try {
-            const findUsers = await customersModel.searchCustomer({
-                CustomerID: req.user.CustomerID,
-            })
+            const [findUsers] = await customersModel.sequelize.query(
+                'CALL customer_api_info(:CustomerID)',
+                {
+                    replacements: { CustomerID: req.user.CustomerID },
+                }
+            );
+
+            // console.log(findUsers)
             if (!findUsers) {
                 throw new Error('Not Found User')
             }
-            console.log(findUsers)
             const customerData = new CustomerDTO(findUsers)
+            console.log(customerData)
             return res.status(200).send({
                 ...customerData,
+                Username: findUsers.Username,
                 createdAt: findUsers.createdAt
             })
         }
