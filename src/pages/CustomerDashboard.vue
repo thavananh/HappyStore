@@ -1,10 +1,13 @@
 <script setup>
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
 import UserProfileOverview from '@/components/Dashboard/UserProfileOverview.vue'
+import { useRoute } from 'vue-router'
+import axios from 'axios'
+import CustomerDTO from '../../backend/dto/Customer.dto.js'
 
 // Biến trạng thái để kiểm soát hamburger menu
 const isHamburgerMenuOpen = ref(false)
@@ -17,6 +20,26 @@ const openHamburgerMenu = () => {
 // Hàm đóng hamburger menu
 const closeHamburgerMenu = () => {
     isHamburgerMenuOpen.value = false
+}
+
+const route = useRoute()
+const needInfo = route.state?.needInfo
+
+axios.defaults.withCredentials = true
+
+const customerData = new CustomerDTO()
+
+if (needInfo) {
+    try {
+        const response = await axios.get('http://localhost:3000/api/customer/info')
+        if (response.status !== 200) {
+            throw new Error('Bad request')
+        }
+
+    }
+    catch (err) {
+        console.log(err)
+    }
 }
 
 </script>
@@ -152,7 +175,15 @@ const closeHamburgerMenu = () => {
                         <div class="d-flex flex-column">
                             <div class="row" style="margin-bottom: 20px">
                                 <div class="col-3">
-                                    <span>Tên đăng nhập</span>
+                                    <span>User ID</span>
+                                </div>
+                                <div class="col">
+                                    <span type="text" style="width: 100%">Xin chao</span>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom: 20px">
+                                <div class="col-3">
+                                    <span>Username</span>
                                 </div>
                                 <div class="col">
                                     <input type="text" style="width: 100%" />
@@ -160,7 +191,8 @@ const closeHamburgerMenu = () => {
                             </div>
                             <div class="row" style="margin-bottom: 20px">
                                 <div class="col-3">
-                                    <span>Tên đăng nhập</span>
+                                    <span>First Name</span>
+
                                 </div>
                                 <div class="col">
                                     <input type="text" style="width: 100%" />
@@ -168,11 +200,27 @@ const closeHamburgerMenu = () => {
                             </div>
                             <div class="row" style="margin-bottom: 20px">
                                 <div class="col-3">
-                                    <span>Tên đăng nhập</span>
+                                    <span>Last Name</span>
                                 </div>
                                 <div class="col">
                                     <input type="text" style="width: 100%" />
                                 </div>
+                            </div>
+                            <div class="row" style="margin-bottom: 20px">
+                                <div class="col-3">
+                                    <span>Email</span>
+                                </div>
+                                <div class="col">
+                                    <input type="text" style="width: 100%" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 20px">
+                            <div class="col-3">
+                                <span>Created at</span>
+                            </div>
+                            <div class="col">
+                                <span type="text" style="width: 100%">Monday, March, 2024</span>
                             </div>
                         </div>
                     </div>

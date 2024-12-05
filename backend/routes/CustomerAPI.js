@@ -1,6 +1,7 @@
 import CustomerDTO from '../dto/Customer.dto.js'
 import CustomersModel from '../models/Customers.model.js'
 import { Router } from 'express'
+import { readUsedSize } from 'chart.js/helpers'
 
 const router = new Router();
 const customersModel = new CustomersModel()
@@ -24,6 +25,9 @@ router.get('/api/customer/info', async (req, res) => {
             console.log(err)
             return res.sendStatus(400)
         }
+    }
+    else {
+        return res.sendStatus(400)
     }
 })
 
