@@ -1,25 +1,11 @@
 import CustomerDTO from '../dto/Customer.dto.js'
 import CustomersModel from '../models/Customers.model.js'
 import { Router } from 'express'
-import { readUsedSize } from 'chart.js/helpers'
-import { v4 as uuidv4 } from 'uuid'
-import path from 'path';
-
-import multer from 'multer';
 
 const router = new Router();
 const customersModel = new CustomersModel()
 
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'images')
-    },
-    filename: (req, file, cb) => {
-        cb(null, uuidv4() + '-' + path.extname(file.originalname))
-    }
-})
-const upload = multer({ storage: storage })
 router.get('/api/customer/info', async (req, res) => {
     if (req.user) {
         try {
@@ -81,12 +67,5 @@ router.post('/api/customer/info/update', async (req, res) => {
     }
 })
 
-router.post('/api/customer/info/upload', upload.single('image'), async (req, res) => {
-    
-})
-
-router.get('/api/customer/info/upload', async (req, res) => {
-
-})
 
 export default router

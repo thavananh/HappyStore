@@ -12,7 +12,7 @@ import { syncAll } from './ultis/syncAll.js'
 import customerAccountAPI from './routes/CustomerAccountAPI.js'
 import connectSessionSequelize from 'connect-session-sequelize';
 import CustomerAPI from './routes/CustomerAPI.js'
-import { v4 as uuidv4 } from 'uuid';
+import UploadAPI from './routes/CustomerUploadAPI.js'
 
 // Initialize the Express app
 const app = express()
@@ -42,8 +42,9 @@ store.sync()
     });
 
 // Middleware setup
-app.use(express.json())
 app.use(cookieParser('06ccd1df-0786-4475-a646-f213253cf563'))
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(
     session({
@@ -70,6 +71,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(customerAccountAPI)
 app.use(CustomerAPI)
+app.use(UploadAPI)
 
 // Middleware setup
 

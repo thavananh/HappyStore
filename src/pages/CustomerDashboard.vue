@@ -149,9 +149,7 @@ async function logout() {
     console.log(`Starting logout`)
     try {
         const response = await axios.post('http://localhost:3000/api/customer_account/logout')
-        setTimeout(() => {
-            router.push('/');
-        }, 1500);
+        await router.push('/')
     }
     catch (e) {
         console.error(e)
@@ -370,7 +368,7 @@ async function changeAvatar() {
 
                     </div>
                     <div class="col-4">
-                        <UserProfileOverview :AccountType="customerData_reactive.CustomerType" :FirstName="customerData_reactive.FirstName"/>
+                        <UserProfileOverview :CustomerID="customerData_reactive.CustomerID" :IsEmployee="false" :AccountType="customerData_reactive.CustomerType" :FirstName="customerData_reactive.FirstName"/>
                     </div>
                 </div>
             </div>

@@ -1,39 +1,22 @@
 <script setup>
-import { ref, nextTick } from 'vue';
+import { ref, nextTick, onBeforeMount } from 'vue';
 import UserAvatar from '@/assets/images/avatar/cat.jpg';
+import axios from 'axios';
 
 const avatar = ref(UserAvatar);
 const fileInput = ref(null); // 明确定义 fileInput 为 null
 
-const modalMessage = ref("Do you want to update this image ?")
-const modalTitle = ref("Information")
+const modalMessage = ref("Do you want to update this image ?");
+const modalTitle = ref("Information");
 
 // Control modal visibility
-const showModal = ref(false)
-
-const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = () => {
-            avatar.value = reader.result; // 更新 avatar 为新图片
-        };
-        reader.readAsDataURL(file);
-        showModal.value = true;
-    }
-
-};
-
-const triggerFileInput = async () => {
-    await nextTick(); // 等待 DOM 更新
-    if (fileInput.value) {
-        fileInput.value.click();
-    } else {
-        console.error('fileInput is not defined');
-    }
-};
+const showModal = ref(false);
 
 const AccountInfoProps = defineProps({
+    CustomerID: {
+        type: String,
+        required: true,
+    },
     AccountType: {
         type: String,
         required: true,
@@ -41,10 +24,83 @@ const AccountInfoProps = defineProps({
     FirstName: {
         type: String,
         required: true,
+    },
+    IsEmployee: {
+        type: Boolean,
+        required: true,
+        default: false,
     }
-})
+});
 
+const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+            avatar.value = reader.result; // Cập nhật avatar mới
+        };
+        reader.readAsDataURL(file);
+        showModal.value = true; // Hiển thị modal xác nhận
+    }
+};
 
+const triggerFileInput = async () => {
+    await nextTick();
+    if (fileInput.value) {
+        fileInput.value.click();
+    } else {
+        console.error('fileInput is not defined');
+    }
+};
+
+const updateImages = async () => {
+    if (!AccountInfoProps.IsEmployee && fileInput.value?.files.length > 0) {
+        const formData = new FormData();
+        formData.append('image', fileInput.value.files[0]);
+        formData.append('CustomerID', AccountInfoProps.CustomerID);
+
+        try {
+            const response = await axios.post('http://localhost:3000/api/customer/info/upload', formData);
+
+            if (response.status === 201) {
+                showModal.value = true;
+                modalMessage.value = "Successfully uploaded!";
+                modalTitle.value = "Information";
+            } else {
+                showModal.value = true;
+                modalMessage.value = "Upload failed!";
+                modalTitle.value = "Error";
+            }
+        } catch (error) {
+            showModal.value = true;
+            modalMessage.value = "Error uploading image.";
+            modalTitle.value = "Error";
+        }
+    } else {
+        showModal.value = true;
+        modalMessage.value = "No file selected.";
+        modalTitle.value = "Error";
+    }
+};
+
+const getAvatarImage = async () => {
+    if (!AccountInfoProps.IsEmployee) {
+        try {
+            const response = await axios.get(`http://localhost:3000/api/customer/info/avatar`, {
+                responseType: 'blob' // Set the response type to blob
+            });
+            const url = URL.createObjectURL(response.data);
+            return url;
+        } catch (error) {
+            console.error('Error fetching avatar:', error);
+            return UserAvatar; // Fallback to default avatar
+        }
+    }
+};
+
+onBeforeMount(async () => {
+    avatar.value = await getAvatarImage();
+});
 </script>
 
 <template>
@@ -78,7 +134,7 @@ const AccountInfoProps = defineProps({
                     <button type="button" class="btn btn-secondary bg-primary" @click="showModal = false">
                         Don't save
                     </button>
-                    <button type="button" class="btn btn-secondary bg-success" @click="showModal = false">
+                    <button type="button" class="btn btn-secondary bg-success" @click="updateImages">
                         Save
                     </button>
                 </div>
