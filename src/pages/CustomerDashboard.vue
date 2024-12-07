@@ -1,14 +1,17 @@
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref, useTemplateRef } from 'vue'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
 import UserProfileOverview from '@/components/Dashboard/UserProfileOverview.vue'
-import { useAppState } from '../store/loginCustomerState.js'
+
 import axios from 'axios'
 import CustomerDTO from '../../backend/dto/Customer.dto.js'
 import convertUnit from '@/utils/convertUnit.js'
+import { useRouter } from 'vue-router'
+
+import {customerDashboardState} from '@/store/customerDashboardState.js'
 
 // Biến trạng thái để kiểm soát hamburger menu
 const isHamburgerMenuOpen = ref(false)
@@ -23,7 +26,7 @@ const closeHamburgerMenu = () => {
     isHamburgerMenuOpen.value = false
 }
 
-const appState = useAppState() // Sử dụng Pinia store
+const router = useRouter()
 
 const isChanging = ref(false)
 
@@ -31,8 +34,22 @@ axios.defaults.withCredentials = true
 
 let customerData_reactive = reactive({})
 
+const modalMessage = ref("You don't have credential to access this paging, we will redirect you back to main page")
+const modalTitle = ref("Warning")
+
+
+// Control modal visibility
+const showModal = ref(false)
+
+const modalMessageChangePassword = ref("Fill information below to change password")
+const modalTitleChangePassword = ref("Information")
+
+
+// Control modal visibility
+const showModalChangePassword = ref(false)
+
+
 onMounted(async () => {
-    console.log("I'm Here")
     try {
         const response = await axios.get('http://localhost:3000/api/customer/info')
         if (response.status === 200) {
@@ -54,8 +71,96 @@ onMounted(async () => {
         }
     } catch (err) {
         console.error('Request failed', err)
+        showModal.value = true
+        setTimeout(() => {
+            router.push('/'); // Chuyển hướng đến home
+        }, 3000);
     }
 })
+
+const username_ref = useTemplateRef('username_ref');
+const first_name_ref = useTemplateRef('first_name_ref');
+const last_name_ref = useTemplateRef('last_name_ref');
+const email_ref = useTemplateRef('email_ref');
+const phone_ref = useTemplateRef('phone_ref');
+const address_ref = useTemplateRef('address_ref');
+const old_password_ref = useTemplateRef('old_password_ref');
+const new_password_ref = useTemplateRef('new_password_ref');
+const confirm_new_password_ref = useTemplateRef('confirm_new_password_ref');
+
+async function updateUserData() {
+    console.log(`Starting update`)
+    const customerData = new CustomerDTO({
+        CustomerID: username_ref.value.value, // Access the DOM element's value
+        FirstName: first_name_ref.value.value,
+        LastName: last_name_ref.value.value,
+        Email: email_ref.value.value,
+        PhoneNumber: phone_ref.value.value,
+        Address: address_ref.value.value,
+        CustomerType: customerData_reactive.CustomerType,
+    })
+    try {
+        const response = await axios.post('http://localhost:3000/api/customer/info/update', {
+            CustomerID: customerData_reactive.CustomerID,
+            FirstName: customerData.FirstName,
+            LastName: customerData.LastName,
+            Email: customerData.Email,
+            PhoneNumber: customerData.PhoneNumber,
+            Address: customerData.Address,
+            CustomerType: customerData.CustomerType,
+            Username: customerData_reactive.Username,
+        })
+        if (response.status === 200) {
+            showModal.value = true
+            modalMessage.value = "Save change successfully"
+            modalTitle.value = "Information"
+        }
+    }
+    catch (e) {
+        console.error(e)
+        showModal.value = true
+        modalMessage.value = "Save change not successfully"
+        modalTitle.value = "Error"
+    }
+}
+
+
+
+async function changePassword() {
+    console.log(`Starting change password`)
+    try {
+        const response = await axios.post('http://localhost:3000/api/customer_account/change_password', {
+            CustomerID: customerData_reactive.CustomerID,
+            Password: new_password_ref.value.value,
+        })
+        showModal.value = true
+        modalMessage.value = "Change password successfully"
+        modalTitle.value = "Information"
+    }
+    catch (e) {
+        console.error(e)
+        showModal.value = true
+        modalMessage.value = "Change password not successfully"
+        modalTitle.value = "Warning"
+    }
+}
+
+async function logout() {
+    console.log(`Starting logout`)
+    try {
+        const response = await axios.post('http://localhost:3000/api/customer_account/logout')
+        setTimeout(() => {
+            router.push('/');
+        }, 1500);
+    }
+    catch (e) {
+        console.error(e)
+    }
+}
+
+async function changeAvatar() {
+    console.log(`Starting change avatar`)
+}
 
 </script>
 
@@ -164,10 +269,8 @@ onMounted(async () => {
                             <span>Tài khoản của tôi</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Hồ sơ</a></li>
-                            <li><a class="dropdown-item" href="#">Địa chỉ giao hàng</a></li>
-                            <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" href="#">Đổi mật khẩu</a></li>
+                            <li><a class="dropdown-item" href="#" @click="showModalChangePassword=true">Đổi mật khẩu</a></li>
+                            <li><a class="dropdown-item" href="#" @click="logout">Đăng xuất</a></li>
                         </ul>
                     </li>
                     <li class="nav-item" style="color: black">
@@ -202,7 +305,7 @@ onMounted(async () => {
                                 </div>
                                 <div class="col">
                                     <span style="width: 100%" v-if="!isChanging">{{customerData_reactive.Username}}</span>
-                                    <input type="text" :value="customerData_reactive.Username" v-if="isChanging" style="width: 100%"/>
+                                    <input type="text" :value="customerData_reactive.Username" v-if="isChanging" style="width: 100%" ref="username_ref"/>
                                 </div>
                             </div>
                             <div class="row" style="margin-bottom: 20px">
@@ -212,7 +315,7 @@ onMounted(async () => {
                                 </div>
                                 <div class="col">
                                     <span v-if="!isChanging">{{customerData_reactive.FirstName}}</span>
-                                    <input type="text" :value="customerData_reactive.FirstName" v-if="isChanging" style="width: 100%"/>
+                                    <input type="text" :value="customerData_reactive.FirstName" v-if="isChanging" style="width: 100%" ref="first_name_ref"/>
                                 </div>
                             </div>
                             <div class="row" style="margin-bottom: 20px">
@@ -221,7 +324,7 @@ onMounted(async () => {
                                 </div>
                                 <div class="col">
                                     <span v-if="!isChanging">{{!customerData_reactive.LastName ? 'null' : customerData_reactive.LastName }}</span>
-                                    <input type="text" :value="customerData_reactive.LastName" v-if="isChanging" style="width: 100%"/>
+                                    <input type="text" :value="customerData_reactive.LastName" v-if="isChanging" style="width: 100%" ref="last_name_ref"/>
                                 </div>
                             </div>
                             <div class="row" style="margin-bottom: 20px">
@@ -230,7 +333,7 @@ onMounted(async () => {
                                 </div>
                                 <div class="col">
                                     <span v-if="!isChanging">{{customerData_reactive.Email}}</span>
-                                    <input type="text" :value="customerData_reactive.Email" v-if="isChanging" style="width: 100%"/>
+                                    <input type="text" :value="customerData_reactive.Email" v-if="isChanging" style="width: 100%" ref="email_ref"/>
                                 </div>
                             </div>
                             <div class="row" style="margin-bottom: 20px">
@@ -239,7 +342,7 @@ onMounted(async () => {
                                 </div>
                                 <div class="col">
                                     <span v-if="!isChanging">{{!customerData_reactive.Address ? 'null' : customerData_reactive.Address}}</span>
-                                    <input type="text" :value="customerData_reactive.Address" v-if="isChanging" style="width: 100%"/>
+                                    <input type="text" :value="customerData_reactive.Address" v-if="isChanging" style="width: 100%" ref="address_ref"/>
                                 </div>
                             </div>
                             <div class="row" style="margin-bottom: 20px">
@@ -248,7 +351,7 @@ onMounted(async () => {
                                 </div>
                                 <div class="col">
                                     <span v-if="!isChanging">{{!customerData_reactive.PhoneNumber ? 'null': customerData_reactive.PhoneNumber}}</span>
-                                    <input type="text" :value="customerData_reactive.PhoneNumber" v-if="isChanging" style="width: 100%"/>
+                                    <input type="text" :value="customerData_reactive.PhoneNumber" v-if="isChanging" style="width: 100%" ref="phone_ref"/>
                                 </div>
                             </div>
                         </div>
@@ -262,13 +365,75 @@ onMounted(async () => {
                         </div>
                         <div class="d-flex flex-row justify-content-between">
                             <button @click="isChanging = !isChanging" type="button" class="btn btn-primary">Change information</button>
-                            <button type="button" class="btn btn-success" v-if="isChanging">Save changes</button>
+                            <button @click="updateUserData" type="button" class="btn btn-success" v-if="isChanging">Save changes</button>
                         </div>
 
                     </div>
                     <div class="col-4">
-                        <UserProfileOverview/>
+                        <UserProfileOverview :AccountType="customerData_reactive.CustomerType" :FirstName="customerData_reactive.FirstName"/>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div
+        class="modal fade"
+        :class="{ show: showModal }"
+        :style="{ display: showModal ? 'block' : 'none' }"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        :aria-hidden="!showModal"
+        role="dialog"
+    >
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">{{ modalTitle }}</h1>
+                    <button type="button" class="btn-close" @click="showModal = false" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{ modalMessage }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @click="showModal = false">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div
+        class="modal fade"
+        :class="{ show: showModalChangePassword }"
+        :style="{ display: showModalChangePassword ? 'block' : 'none' }"
+        id="ChangePasswordModal"
+        tabindex="-1"
+        aria-labelledby="changePasswordModalLabel"
+        :aria-hidden="!showModalChangePassword"
+        role="dialog"
+    >
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="padding: 10px">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="changePasswordModalLabel">{{ modalTitleChangePassword }}</h1>
+                    <button type="button" class="btn-close" @click="showModalChangePassword = false" aria-label="Close"></button>
+                </div>
+                <span>Old password</span>
+                <input type="password" style="width: 100%" ref="old_password_ref"/>
+                <span>New password</span>
+                <input type="password" style="width: 100%" ref="new_password_ref"/>
+                <span>Confirm new password</span>
+                <input type="password" style="width: 100%" ref="confirm_new_password_ref"/>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" @click="showModalChangePassword = false">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-success" @click="changePassword">
+                        Save changes
+                    </button>
                 </div>
             </div>
         </div>

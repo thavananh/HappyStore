@@ -2,9 +2,24 @@ import CustomerDTO from '../dto/Customer.dto.js'
 import CustomersModel from '../models/Customers.model.js'
 import { Router } from 'express'
 import { readUsedSize } from 'chart.js/helpers'
+import { v4 as uuidv4 } from 'uuid'
+import path from 'path';
+
+import multer from 'multer';
 
 const router = new Router();
 const customersModel = new CustomersModel()
+
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'images')
+    },
+    filename: (req, file, cb) => {
+        cb(null, uuidv4() + '-' + path.extname(file.originalname))
+    }
+})
+const upload = multer({ storage: storage })
 router.get('/api/customer/info', async (req, res) => {
     if (req.user) {
         try {
@@ -35,6 +50,43 @@ router.get('/api/customer/info', async (req, res) => {
     else {
         return res.sendStatus(400)
     }
+})
+
+router.post('/api/customer/info/update', async (req, res) => {
+    if (req.user) {
+        try {
+            console.log(`Starting update for ${req.body.CustomerID}`)
+            const startQuery = await customersModel.sequelize.query('CALL customer_api_info_update(:CustomerID, :FirstName, :LastName, :PhoneNumber, :Email, :Address, :CustomerType, :Username)', {
+                replacements: {
+                    CustomerID: req.body.CustomerID,
+                    FirstName: req.body.FirstName,
+                    LastName: req.body.LastName,
+                    PhoneNumber: req.body.PhoneNumber,
+                    Email: req.body.Email,
+                    Address: req.body.Address,
+                    CustomerType: req.body.CustomerType,
+                    Username: req.body.Username,
+                },
+            })
+            console.log(`Update customer ${req.body.CustomerID} successfully`)
+            return res.sendStatus(200)
+        }
+        catch (err) {
+            console.log(err)
+            return res.sendStatus(400)
+        }
+    }
+    else {
+        return res.sendStatus(400)
+    }
+})
+
+router.post('/api/customer/info/upload', upload.single('image'), async (req, res) => {
+    
+})
+
+router.get('/api/customer/info/upload', async (req, res) => {
+
 })
 
 export default router

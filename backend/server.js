@@ -12,9 +12,11 @@ import { syncAll } from './ultis/syncAll.js'
 import customerAccountAPI from './routes/CustomerAccountAPI.js'
 import connectSessionSequelize from 'connect-session-sequelize';
 import CustomerAPI from './routes/CustomerAPI.js'
+import { v4 as uuidv4 } from 'uuid';
 
 // Initialize the Express app
 const app = express()
+
 
 const db = new Database()
 const sequelize = db.getSequelize()
@@ -33,10 +35,10 @@ const store = new SequelizeStore({
 
 store.sync()
     .then(() => {
-        console.log('Session table synchronized successfully.');
+        console.log('Session table initialized successfully.');
     })
     .catch((err) => {
-        console.error('Failed to synchronize session table:', err);
+        console.error('Failed to initialized session table:', err);
     });
 
 // Middleware setup
@@ -58,10 +60,9 @@ app.use(
     })
 )
 
-// Your other app routes and logic go here
 
 app.use(cors({
-    origin: 'http://localhost:5173', // Thay YOUR_CLIENT_PORT bằng port của front-end
+    origin: 'http://localhost:5173',
     credentials: true
 }))
 app.use(bodyParser.json())

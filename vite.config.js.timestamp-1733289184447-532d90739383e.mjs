@@ -1,6 +1,6 @@
 // vite.config.js
 import { fileURLToPath, URL } from "node:url";
-import { defineConfig } from "file:///D:/HappyStore/node_modules/.pnpm/vite@5.4.11_@types+node@22.10.1/node_modules/vite/dist/node/loginCustomerState.js";
+import { defineConfig } from "file:///D:/HappyStore/node_modules/.pnpm/vite@5.4.11_@types+node@22.10.1/node_modules/vite/dist/node/customerDashboardState.js";
 import vue from "file:///D:/HappyStore/node_modules/.pnpm/@vitejs+plugin-vue@5.2.1_vite@5.4.11_@types+node@22.10.1__vue@3.5.13/node_modules/@vitejs/plugin-vue/dist/index.mjs";
 import vueDevTools from "file:///D:/HappyStore/node_modules/.pnpm/vite-plugin-vue-devtools@7.6.7_rollup@4.28.0_vite@5.4.11_@types+node@22.10.1__vue@3.5.13/node_modules/vite-plugin-vue-devtools/dist/vite.mjs";
 var __vite_injected_original_import_meta_url = "file:///D:/HappyStore/vite.config.js";

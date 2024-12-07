@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import { checkSchema, matchedData, query, validationResult } from 'express-validator'
+import { body, checkSchema, matchedData, query, validationResult } from 'express-validator'
 import {createUserValidationSchema} from '../ultis/customerValidationSchema.js'
 import { hashPassword } from '../strategies/helper.js'
 import CustomerAccountDTO from '../dto/CustomerAccount.dto.js'
@@ -13,6 +13,7 @@ const router = new Router();
 const customerAccount = new CustomerAccountModel().getCustomerAccount()
 import { v4 as uuidv4 } from 'uuid';
 import passport from 'passport'
+import { changePasswordSchema } from '../ultis/changePasswordSchema.js'
 
 const customersModel = new CustomersModel().getCustomers()
 const customerAccountModel = new CustomerAccountModel().getCustomerAccount()
@@ -82,6 +83,53 @@ router.get('/api/customer_account/status', (req, res) => {
         return res.sendStatus(401)
     }
 })
+
+router.post('/api/customer_account/change_password',checkSchema(changePasswordSchema), async (req, res) => {
+    if (req.user) {
+        try {
+            const result = validationResult(req)
+            if (!result.isEmpty()) return res.status(400).send({ errors: result.array() })
+            const data = matchedData(req)
+            console.log(req.body)
+            const startQuery = await customerAccountModel.sequelize.query('CALL customeraccount_api_password_update(:CustomerID, :PasswordHash)', {
+                replacements: {
+                    CustomerID: req.body.CustomerID,
+                    PasswordHash: hashPassword(req.body.Password),
+                }
+            });
+            return res.sendStatus(200)
+        }
+        catch (e) {
+            console.log(e)
+            return res.sendStatus(400)
+        }
+    }
+    else {
+        return res.sendStatus(401)
+    }
+})
+
+router.post('/api/customer_account/logout', async (req, res) => {
+    try {
+        // Đăng xuất người dùng khỏi Passport
+        req.logout((err) => {
+            if (err) {
+                return res.status(500).send('Failed to logout');
+            }
+
+            // Xóa session khỏi cơ sở dữ liệu
+            req.session.destroy((err) => {
+                if (err) {
+                    return res.status(500).send('Failed to destroy session in DB');
+                }
+                res.sendStatus(200); // Đăng xuất thành công
+            });
+        });
+    } catch (e) {
+        console.log(e);
+        res.status(500).send('Error during logout');
+    }
+});
 
 // router.get('/api/customer_account/info', (req, res) => {
 //     if (req.user) {
