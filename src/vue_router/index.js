@@ -12,6 +12,9 @@ import Product_Dashboard from '@/layouts/Product_Dashboard.vue'
 import ThuNghiem from '@/components/GiaoDienThuNghiem/ThuNghiem.vue'
 import CustomerDashboard from '@/pages/CustomerDashboard.vue'
 import MainPage from '@/pages/MainPage.vue'
+import EmployeeLoginPage from '@/pages/EmployeeLoginPage.vue'
+import EmployeeLogin from '@/components/Login/EmployeeLogin.vue'
+import EmployeeRegister from '@/components/Login/EmployeeRegister.vue'
 
 const routes = [
     {
@@ -71,6 +74,22 @@ const routes = [
         path: '/customer_dashboard',
         name: 'CustomerDashboard',
         component: CustomerDashboard,
+    },
+    {
+        path: '/employee_login',
+        component: EmployeeLoginPage,
+        children: [
+            {
+                path: '',
+                name: 'Login',
+                component: EmployeeLogin,
+            },
+            {
+                path: '/employee_register',
+                name: 'Registration',
+                component: EmployeeRegister
+            }
+        ]
     },
     {
         path: '/thu_nghiem',

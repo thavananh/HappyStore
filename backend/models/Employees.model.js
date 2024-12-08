@@ -27,6 +27,10 @@ class EmployeesModel {
                 type: DataTypes.STRING(100),
                 allowNull: false
             },
+            Address: {
+                type: DataTypes.TEXT,
+                allowNull: false
+            },
             Position: {
                 type: DataTypes.STRING(50),
                 allowNull: false
