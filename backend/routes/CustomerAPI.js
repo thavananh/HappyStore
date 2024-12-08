@@ -7,6 +7,7 @@ const customersModel = new CustomersModel()
 
 
 router.get('/api/customer/info', async (req, res) => {
+    console.log(req.user)
     if (req.user) {
         try {
             const [findUsers] = await customersModel.sequelize.query(

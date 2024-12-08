@@ -15,7 +15,7 @@ const employeeModel = new EmployeesModel().getEmployees()
 const employeeAccountModel = new EmployeeAccountModel().getEmployeeAccount()
 
 
-router.post('/api/employee/create', checkSchema(createEmployeeAccountValidationSchema), async (req, res) => {
+router.post('/api/employee_account/create', checkSchema(createEmployeeAccountValidationSchema), async (req, res) => {
     const result = validationResult(req)
     if (!result.isEmpty()) return res.status(400).send({ errors: result.array() })
     const data = matchedData(req)
@@ -55,7 +55,7 @@ router.post('/api/employee/create', checkSchema(createEmployeeAccountValidationS
         }
     )
     try {
-        employeeAccountModel.create(employeeAccountModel)
+        employeeAccountModel.create(employeeAccountData)
         console.log(`Create new employee account successfully`)
         return res.status(201).send({msg: "success"})
     }
@@ -66,11 +66,11 @@ router.post('/api/employee/create', checkSchema(createEmployeeAccountValidationS
 })
 
 
-router.post('/api/employee/auth', passport.authenticate('local-employee-sign-in'), (req, res) => {
+router.post('/api/employee_account/auth', passport.authenticate('local-employee-sign-in'), (req, res) => {
     res.sendStatus(200)
 })
 
-router.get('/api/employee/status', (req, res) => {
+router.get('/api/employee_account/status', (req, res) => {
     if (req.user) {
         console.log(req.session.id)
         return res.sendStatus(200)
@@ -80,16 +80,16 @@ router.get('/api/employee/status', (req, res) => {
     }
 })
 
-router.post('/api/customer_account/change_password',checkSchema(changePasswordSchema), async (req, res) => {
+router.post('/api/employee_account/change_password',checkSchema(changePasswordSchema), async (req, res) => {
     if (req.user) {
         try {
             const result = validationResult(req)
             if (!result.isEmpty()) return res.status(400).send({ errors: result.array() })
             const data = matchedData(req)
             console.log(req.body)
-            const startQuery = await customerAccountModel.sequelize.query('CALL customeraccount_api_password_update(:CustomerID, :PasswordHash)', {
+            const startQuery = await employeeAccountModel.sequelize.query('CALL employeeaccount_api_password_update(:EmployeeID, :PasswordHash)', {
                 replacements: {
-                    CustomerID: req.body.CustomerID,
+                    EmployeeID: req.body.EmployeeID,
                     PasswordHash: hashPassword(req.body.Password),
                 }
             });
@@ -105,14 +105,13 @@ router.post('/api/customer_account/change_password',checkSchema(changePasswordSc
     }
 })
 
-router.post('/api/customer_account/logout', async (req, res) => {
+router.post('/api/employee_account/logout', async (req, res) => {
     try {
         // Đăng xuất người dùng khỏi Passport
         req.logout((err) => {
             if (err) {
                 return res.status(500).send('Failed to logout');
             }
-
             // Xóa session khỏi cơ sở dữ liệu
             req.session.destroy((err) => {
                 if (err) {
@@ -126,3 +125,5 @@ router.post('/api/customer_account/logout', async (req, res) => {
         res.status(500).send('Error during logout');
     }
 });
+
+export default router;

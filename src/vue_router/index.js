@@ -81,12 +81,12 @@ const routes = [
         children: [
             {
                 path: '',
-                name: 'Login',
+                name: 'EmployeeLogin',
                 component: EmployeeLogin,
             },
             {
                 path: '/employee_register',
-                name: 'Registration',
+                name: 'EmployeeRegistration',
                 component: EmployeeRegister
             }
         ]

@@ -11,6 +11,7 @@ import product_8 from '@/assets/images/product_8.png'
 import product_9 from '@/assets/images/product_9.png'
 import product_10 from '@/assets/images/product_10.png'
 
+
 import { ref } from 'vue'
 
 

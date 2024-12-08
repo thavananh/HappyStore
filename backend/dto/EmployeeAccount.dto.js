@@ -6,9 +6,9 @@ class EmployeeAccountDTO {
     EmployeeID;
     constructor(data) {
         this.UserID = data.UserID;
-        this.Username = data.UserName;
+        this.Username = data.Username;
         this.PasswordHash = data.PasswordHash;
-        this.Email = data.email;
+        this.Email = data.Email;
     }
 }
 

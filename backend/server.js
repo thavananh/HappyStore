@@ -14,6 +14,9 @@ import connectSessionSequelize from 'connect-session-sequelize';
 import CustomerAPI from './routes/CustomerAPI.js'
 import UploadAPI from './routes/CustomerUploadAPI.js'
 
+import EmployeeAPI from './routes/EmployeeAPI.js'
+import EmployeeAccountAPI from './routes/EmployeeAccountAPI.js'
+
 // Initialize the Express app
 const app = express()
 
@@ -72,6 +75,8 @@ app.use(passport.session())
 app.use(customerAccountAPI)
 app.use(CustomerAPI)
 app.use(UploadAPI)
+app.use(EmployeeAPI)
+app.use(EmployeeAccountAPI)
 
 // Middleware setup
 

@@ -9,7 +9,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 
-import deal_of_the_week from '@/assets/images/deal_ofthe_week.png'
+import deal_of_the_week from '@/assets/images/deal-of-the-week.jpg'
 
 import product_1 from '@/assets/images/product_1.png'
 import product_2 from '@/assets/images/product_2.png'
@@ -54,13 +54,13 @@ const closeHamburgerMenu = () => {
 <template>
     <div class="super_container">
         <!-- Slider -->
-        <div class="main_slider" style="background-image:url(src/assets/images/slider_1.jpg)">
+        <div class="main_slider" style="background-image:url(src/assets/images/banner_sale_noel.jpg)">
             <div class="container fill_height">
                 <div class="row align-items-center fill_height">
                     <div class="col">
                         <div class="main_slider_content">
-                            <h6>Spring / Summer Collection 2017</h6>
-                            <h1>Get up to 30% Off New Arrivals</h1>
+                            <h6>Sale Giáng Sinh 2024</h6>
+                            <h1>Ưu Đãi Đặc Biệt Lên Tới 70%</h1>
                             <div class="red_button shop_now_button"><a href="#">shop now</a></div>
                         </div>
                     </div>
@@ -74,23 +74,23 @@ const closeHamburgerMenu = () => {
             <div class="container">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="banner_item align-items-center" style="background-image:url(src/assets/images/banner_1.jpg)">
+                        <div class="banner_item align-items-center" style="background-image:url(src/assets/images/snack.jpg)">
                             <div class="banner_category">
-                                <a href="categories.html">women's</a>
+                                <a href="categories.html">Thức Ăn Vặt</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="banner_item align-items-center" style="background-image:url(src/assets/images/banner_2.jpg)">
+                        <div class="banner_item align-items-center" style="background-image:url(src/assets/images/beverage.jpg)">
                             <div class="banner_category">
-                                <a href="categories.html">accessories's</a>
+                                <a href="categories.html">Nước Giải Khát</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="banner_item align-items-center" style="background-image:url(src/assets/images/banner_3.jpg)">
+                        <div class="banner_item align-items-center" style="background-image:url(src/assets/images/grocery.jpg)">
                             <div class="banner_category">
-                                <a href="categories.html">men's</a>
+                                <a href="categories.html">Mặt Hàng Thiết Yếu</a>
                             </div>
                         </div>
                     </div>
@@ -105,7 +105,7 @@ const closeHamburgerMenu = () => {
                 <div class="row">
                     <div class="col text-center">
                         <div class="section_title new_arrivals_title">
-                            <h2>New Arrivals</h2>
+                            <h2>Hàng Mới</h2>
                         </div>
                     </div>
                 </div>
@@ -114,9 +114,9 @@ const closeHamburgerMenu = () => {
                         <div class="new_arrivals_sorting">
                             <ul class="arrivals_grid_sorting clearfix button-group filters-button-group">
                                 <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked" data-filter="*">all</li>
-                                <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".women">women's</li>
-                                <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".accessories">accessories</li>
-                                <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".men">men's</li>
+                                <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".women">Thức Ăn Vặt</li>
+                                <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".accessories">Nước Giải Khát</li>
+                                <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".men">Mặt Hàng Thiết Yếu</li>
                             </ul>
                         </div>
                     </div>
@@ -163,7 +163,7 @@ const closeHamburgerMenu = () => {
 
         <!-- Deal of the week -->
 
-        <div class="deal_ofthe_week">
+        <div class="deal_ofthe_week" style="margin-top: 80px">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-6">
@@ -174,7 +174,7 @@ const closeHamburgerMenu = () => {
                     <div class="col-lg-6 text-right deal_ofthe_week_col">
                         <div class="deal_ofthe_week_content d-flex flex-column align-items-center float-right">
                             <div class="section_title">
-                                <h2>Deal Of The Week</h2>
+                                <h2>Khuyến Mãi Tuần</h2>
                             </div>
                             <ul class="timer">
                                 <li class="d-inline-flex flex-column justify-content-center align-items-center">
@@ -194,7 +194,7 @@ const closeHamburgerMenu = () => {
                                     <div class="timer_unit">Sec</div>
                                 </li>
                             </ul>
-                            <div class="red_button deal_ofthe_week_button"><a href="#">shop now</a></div>
+                            <div class="red_button deal_ofthe_week_button"><a href="#">Mua Ngay</a></div>
                         </div>
                     </div>
                 </div>
@@ -202,11 +202,12 @@ const closeHamburgerMenu = () => {
         </div>
 
         <!-- Best Sellers -->
-        <div class="best_sellers">
+        <div class="best_sellers" style="margin-top: 40px">
             <div class="container">
                 <!-- ... (section title) -->
                 <div class="row">
                     <div class="col">
+                        <h2 style="text-align: center">Best Seller</h2>
                         <Swiper
                             :initial-slide="2"
                             :modules="[Autoplay, Navigation, Pagination]"
@@ -247,42 +248,33 @@ const closeHamburgerMenu = () => {
 
         <!-- Benefit -->
 
-        <div class="benefit">
+        <div class="benefit" style="padding-top: 20px">
             <div class="container">
-                <div class="row benefit_row">
+                <div class="row benefit_row justify-content-center">
                     <div class="col-lg-3 benefit_col">
                         <div class="benefit_item d-flex flex-row align-items-center">
                             <div class="benefit_icon"><i class="fa fa-truck" aria-hidden="true"></i></div>
                             <div class="benefit_content">
-                                <h6>free shipping</h6>
-                                <p>Suffered Alteration in Some Form</p>
+                                <h6>Free Ship</h6>
+                                <p>Trong vòng bán kính 5km</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 benefit_col">
                         <div class="benefit_item d-flex flex-row align-items-center">
-                            <div class="benefit_icon"><i class="fa fa-money" aria-hidden="true"></i></div>
+                            <div class="benefit_icon"><i class="fa-solid fa-money-bill"></i></div>
                             <div class="benefit_content">
-                                <h6>cach on delivery</h6>
-                                <p>The Internet Tend To Repeat</p>
+                                <h6>COD</h6>
+                                <p>Cho Phép Thanh Toán Khi Nhận Hàng</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 benefit_col">
                         <div class="benefit_item d-flex flex-row align-items-center">
-                            <div class="benefit_icon"><i class="fa fa-undo" aria-hidden="true"></i></div>
+                            <div class="benefit_icon"><i class="fa-solid fa-door-open"></i></div>
                             <div class="benefit_content">
-                                <h6>45 days return</h6>
-                                <p>Making it Look Like Readable</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 benefit_col">
-                        <div class="benefit_item d-flex flex-row align-items-center">
-                            <div class="benefit_icon"><i class="fa fa-clock-o" aria-hidden="true"></i></div>
-                            <div class="benefit_content">
-                                <h6>opening all week</h6>
-                                <p>8AM - 09PM</p>
+                                <h6>24/7</h6>
+                                <p>Luôn Luôn Mở Cửa</p>
                             </div>
                         </div>
                     </div>
@@ -297,44 +289,45 @@ const closeHamburgerMenu = () => {
                 <div class="row">
                     <div class="col text-center">
                         <div class="section_title">
-                            <h2>Latest Blogs</h2>
+                            <h2>Blog Mới Nhất Về Sức Khoẻ</h2>
                         </div>
                     </div>
                 </div>
                 <div class="row blogs_container">
                     <div class="col-lg-4 blog_item_col">
                         <div class="blog_item">
-                            <div class="blog_background" style="background-image:url(src/assets/images/blog_1.jpg)"></div>
+                            <div class="blog_background" style="background-image:url(src/assets/images/winter-health.jpg)"></div>
                             <div class="blog_content d-flex flex-column align-items-center justify-content-center text-center">
-                                <h4 class="blog_title">Here are the trends I see coming this fall</h4>
-                                <span class="blog_meta">by admin | dec 01, 2017</span>
-                                <a class="blog_more" href="#">Read more</a>
+                                <h4 class="blog_title">5 Bí Quyết Giữ Sức Khoẻ Mùa Đông</h4>
+                                <span class="blog_meta">by admin | Dec 01, 2023</span>
+                                <a class="blog_more" href="#">Đọc thêm</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 blog_item_col">
                         <div class="blog_item">
-                            <div class="blog_background" style="background-image:url(src/assets/images/blog_2.jpg)"></div>
+                            <div class="blog_background" style="background-image:url(src/assets/images/balance-diet.webp)"></div>
                             <div class="blog_content d-flex flex-column align-items-center justify-content-center text-center">
-                                <h4 class="blog_title">Here are the trends I see coming this fall</h4>
-                                <span class="blog_meta">by admin | dec 01, 2017</span>
-                                <a class="blog_more" href="#">Read more</a>
+                                <h4 class="blog_title">Chế Độ Ăn Uống Lành Mạnh Cho Người Bận Rộn</h4>
+                                <span class="blog_meta">by admin | Dec 01, 2023</span>
+                                <a class="blog_more" href="#">Đọc thêm</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 blog_item_col">
                         <div class="blog_item">
-                            <div class="blog_background" style="background-image:url(src/assets/images/blog_3.jpg)"></div>
+                            <div class="blog_background" style="background-image:url(src/assets/images/healthy-recipe.webp)"></div>
                             <div class="blog_content d-flex flex-column align-items-center justify-content-center text-center">
-                                <h4 class="blog_title">Here are the trends I see coming this fall</h4>
-                                <span class="blog_meta">by admin | dec 01, 2017</span>
-                                <a class="blog_more" href="#">Read more</a>
+                                <h4 class="blog_title">Công Thức Nấu Ăn Lành Mạnh Cho Mọi Người</h4>
+                                <span class="blog_meta">by admin | Dec 01, 2023</span>
+                                <a class="blog_more" href="#">Đọc thêm</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 

@@ -11,16 +11,28 @@ const employeeAccountInstance = new EmployeeAccountModel()
 passport.serializeUser((user, done) => {
     console.log("Inside serializeUser")
     // done(null, user.UserID)
-    done(null, user)
+    done(null, { id: user.UserID, isEmployed: user.isEmployed })
 })
 
-passport.deserializeUser(async(id, done) => {
+passport.deserializeUser(async(user, done) => {
     console.log("Inside deserializeUser")
-    console.log(`Deserialized UserID: ${id}`)
+    console.log(`Deserialized UserID: ${user.id}`)
     try {
         console.log("Deserialize User")
-        const findUser = await customerAccountInstance.searchCustomerAccount({UserID: id})
+        console.log(user)
+        let findUser;
+        if (user.isEmployed == true) {
+            console.log(`Tao ở đây nè`)
+            findUser = await employeeAccountInstance.searchEmployeeAccount({ UserID: user.id})
+        }
+        else if (user.isEmployed == false) {
+            findUser = await customerAccountInstance.searchCustomerAccount({ UserID: user.id})
+        }
+        else {
+            throw new Error(`Invalid user role`)
+        }
         if (!findUser) throw new Error('User not found')
+        console.log(`Find User: ${findUser}`)
         done(null, findUser)
     } catch (err) {
         done(err, null)
@@ -41,6 +53,7 @@ passport.use('local-customer-sign-in', new LocalStrategy(
                 throw new Error('Invalid credentials')
             }
             console.log(`Xác thực thành công`)
+            findUser.isEmployed = false
             done(null, findUser)
         }
         catch (err) {
@@ -63,6 +76,7 @@ passport.use('local-employee-sign-in', new LocalStrategy(
                 throw new Error('Invalid credentials')
             }
             console.log(`Xác thực thành công`)
+            findUser.isEmployed = true
             done(null, findUser)
         }
         catch (err) {

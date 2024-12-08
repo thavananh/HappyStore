@@ -99,7 +99,7 @@ class EmployeeAccountModel {
      */
     async searchEmployeeAccount(criteria) {
         try {
-            const account = await this.user.findAll({
+            const account = await this.user.findOne({
                 where: {
                     ...criteria
                 }

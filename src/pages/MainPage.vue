@@ -12,6 +12,7 @@ const openHamburgerMenu = () => {
 const closeHamburgerMenu = () => {
     isHamburgerMenuOpen.value = false;
 };
+import LogoHappyStore from '@/assets/images/logo/LogoHappyStore_NenTrang.png'
 
 </script>
 
@@ -24,16 +25,14 @@ const closeHamburgerMenu = () => {
                     <div class="row">
                         <div class="col-lg-12 text-right">
                             <div class="logo_container">
-                                <a href="#">colo<span>shop</span></a>
+                                <img :src="LogoHappyStore" alt="" style=" height: 100px;">
                             </div>
                             <nav class="navbar">
                                 <ul class="navbar_menu">
-                                    <li><router-link to="/">home</router-link></li>
-                                    <li><router-link to="/shop">shop</router-link></li>
-                                    <li><a href="#">promotion</a></li>
-                                    <li><a href="#">pages</a></li>
-                                    <li><a href="#">blog</a></li>
-                                    <li><a href="contact.html">contact</a></li>
+                                    <li><router-link to="/">Trang Chủ</router-link></li>
+                                    <li><router-link to="/shop">Cửa Hàng</router-link></li>
+                                    <li><a href="#">Bài Viết</a></li>
+                                    <li><a href="contact.html">Liên Hệ</a></li>
                                 </ul>
                                 <ul class="navbar_user">
                                     <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
@@ -83,41 +82,16 @@ const closeHamburgerMenu = () => {
                             <li><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
                         </ul>
                     </li>
-                    <li class="menu_item"><router-link to="/">home</router-link></li>
-                    <li class="menu_item"><router-link to="/shop">shop</router-link></li>
-                    <li class="menu_item"><a href="#">promotion</a></li>
-                    <li class="menu_item"><a href="#">pages</a></li>
-                    <li class="menu_item"><a href="#">blog</a></li>
-                    <li class="menu_item"><a href="#">contact</a></li>
+                    <li class="menu_item"><router-link to="/">Trang chủ</router-link></li>
+                    <li class="menu_item"><router-link to="/shop">Cửa Hàng</router-link></li>
+                    <li class="menu_item"><a href="#">Bài Viết</a></li>
+                    <li class="menu_item"><a href="#">Liên Hệ</a></li>
                 </ul>
             </div>
         </div>
 
 
         <router-view></router-view>
-
-        <!-- Newsletter -->
-
-        <div class="newsletter">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="newsletter_text d-flex flex-column justify-content-center align-items-lg-start align-items-md-center text-center">
-                            <h4>Newsletter</h4>
-                            <p>Subscribe to our newsletter and get 20% off your first purchase</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <form action="post">
-                            <div class="newsletter_form d-flex flex-md-row flex-column flex-xs-column align-items-center justify-content-lg-end justify-content-center">
-                                <input id="newsletter_email" type="email" placeholder="Your email" required="required" data-error="Valid email is required.">
-                                <button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300" value="Submit">subscribe</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- Footer -->
 
@@ -129,7 +103,9 @@ const closeHamburgerMenu = () => {
                             <ul class="footer_nav">
                                 <li><a href="#">Blog</a></li>
                                 <li><a href="#">FAQs</a></li>
-                                <li><a href="contact.html">Contact us</a></li>
+                                <li><a href="contact.html">Liên hệ chúng tôi</a></li>
+                                <li><a href="#">Chính sách bảo mật</a></li>
+                                <li><a href="#">Điều khoản sử dụng</a></li>
                             </ul>
                         </div>
                     </div>
@@ -147,13 +123,19 @@ const closeHamburgerMenu = () => {
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
+                        <div class="footer_contact">
+                            <p><strong>Địa chỉ:</strong> 280 An Dương Vương, Quận 5, Thành phố HCM</p>
+                            <p><strong>Số điện thoại:</strong> (028) 1234 5678</p>
+                            <p><strong>Email:</strong> contact@happystore.com</p>
+                        </div>
                         <div class="footer_nav_container">
-                            <div class="cr">©2018 All Rights Reserverd. Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="#">Colorlib</a> &amp; distributed by <a href="https://themewagon.com">ThemeWagon</a></div>
+                            <div class="cr">©2024 All Rights Reserved. Team HappyStore</div>
                         </div>
                     </div>
                 </div>
             </div>
         </footer>
+
 
     </div>
 </template>
